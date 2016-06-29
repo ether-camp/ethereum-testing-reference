@@ -77,36 +77,21 @@ describe('Math Contract Suite', function() {
   });
   
   
-  /*
-    TestCase: test-sum 
-	Description: test call to sum().
-  */
-  it('test-sum', function(done) {
-	  /*inf*/console.log(" [test-sum]");
-	  
-	  /* Call to deployed math contract */
-	  math.sum(2, 2);		
-	  
-	  console.log("filtering...");
-
 	  /*
-	  var filter = sandbox.web3.eth.filter("latest");
-      
-	  filter.watch(function(error, result){
-		if (error) {
-			console.log(error);
-			return;
-		}
-		
-
-		console.log("filter fired");
-	  });
-	  
-	  
-	  
-	  this.timeout(10000);
-	  filter.stopWatching();
+		TestCase: test-sum 
+		Description: test call to sum().
 	  */
+	  it('test-sum', function(done) {
+      /*inf*/console.log(" [test-sum]");
+		  
+		  /* Call to deployed math contract */
+		  var txHash = math.sum(2, 2);
+		  
+		  console.log("getting result");
+		  helper.waitForSandboxReceipt(sandbox.web3, txHash, function(err, receipt) {
+		    if (err) {console.log(err); return}; 
+			console.log(receipt.returnValue);
+		  });
 	  
 	  done();
 	  
