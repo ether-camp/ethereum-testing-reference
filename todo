@@ -1,0 +1,6 @@
+
+
+[V] Math testing
+[ ] Add contract with state changes / constant calls
+[ ] Events testing
+[ ] Add test suite with 2 contracts calling each other (NameReg + Another One)

@@ -74,41 +74,110 @@ describe('Math Contract Suite', function() {
 			}			
 		});	  
 	  
-	  /*inf*/ var end = new Date().getTime();
-      /*inf*/ time = (end - start)/1000; console.log(" < " + time  + "s >\n");
   });
   
   
-	  /*
-		TestCase: test-sum 
-		Description: test call to sum().
-	  */
-	  it('test-sum', function(done) {
-      /*inf*/console.log(" [test-sum]");
-		  
-		  /* Call to deployed math contract */
-		  txHash = math.sum(2, 2);
-		  expected = 4;
-		  
-		  /* Get the result */
-		  helper.waitForSandboxReceipt(sandbox.web3, txHash, function(err, receipt) {
-		    if (err) return done(err);
-			
-				result = sandbox.web3.toBigNumber(receipt.returnValue).toNumber() 
+  /*
+	TestCase: test-sum 
+	Description: test call to sum().
+  */
+  it('test-sum', function(done) {
+  /*inf*/console.log(" [test-sum]");
+	  
+	  /* Call to deployed math contract */
+	  txHash = math.sum(2, 2);
+	  expected = 4;
+	  
+	  /* Get the result */
+	  helper.waitForSandboxReceipt(sandbox.web3, txHash, function(err, receipt) {
+		if (err) return done(err);
+		
+			result = sandbox.web3.toBigNumber(receipt.returnValue).toNumber() 
 
-				assert.equal(result, expected);
-				assert.notEqual(result, 5);
-				 
-				done();
-		  });
+			assert.equal(result, expected);
+			assert.notEqual(result, 5);
+			 
+			done();
+	  });
+			  
+ });
+  
+  /*
+	TestCase: test-mul
+	Description: test call to mul().
+  */
+  it('test-mul', function(done) {
+   /*inf*/console.log(" [test-mul]");
+	  
+	  /* Call to deployed math contract */
+	  txHash = math.mul(3, 3);
+	  expected = 9;
+	  
+	  /* Get the result */
+	  helper.waitForSandboxReceipt(sandbox.web3, txHash, function(err, receipt) {
+		if (err) return done(err);
+		
+			result = sandbox.web3.toBigNumber(receipt.returnValue).toNumber() 
 
-	 /*inf*/ var end = new Date().getTime();
-     /*inf*/ var time = (end - start)/1000; console.log(" < " + time  + "s >\n");
-		  
-		  
+			assert.equal(result, expected);
+			assert.notEqual(result, 5);
+			 
+			done();
+	  });
+			  
   });
   
-  
+
+  /*
+	TestCase: test-sub
+	Description: test call to sub().
+  */
+  it('test-sub', function(done) {
+   /*inf*/console.log(" [test-sub]");
+	  
+	  /* Call to deployed math contract */
+	  txHash = math.sub(16, 3);
+	  expected = 13;
+	  
+	  /* Get the result */
+	  helper.waitForSandboxReceipt(sandbox.web3, txHash, function(err, receipt) {
+		if (err) return done(err);
+		
+			result = sandbox.web3.toBigNumber(receipt.returnValue).toNumber() 
+
+			assert.equal(result, expected);
+			assert.notEqual(result, 15);
+			 
+			done();
+	  });
+			  
+  });
+
+
+  /*
+	TestCase: test-div
+	Description: test call to div().
+  */
+  it('test-div', function(done) {
+   /*inf*/console.log(" [test-div]");
+	  
+	  /* Call to deployed math contract */
+	  txHash = math.div(16, 4);
+	  expected = 4;
+	  
+	  /* Get the result */
+	  helper.waitForSandboxReceipt(sandbox.web3, txHash, function(err, receipt) {
+		if (err) return done(err);
+		
+			result = sandbox.web3.toBigNumber(receipt.returnValue).toNumber() 
+
+			assert.equal(result, expected);
+			assert.notEqual(result, 12);
+			 
+			done();
+	  });
+			  
+  });
   
   
   after(function(done) {

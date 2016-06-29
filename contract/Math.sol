@@ -2,12 +2,21 @@
 
 contract Math{
 
-    event SumEvent(string ID, uint result);
 
-	function sum(uint a, uint b) returns (uint result){
-	
-	    
+	function sum(uint a, uint b) returns (uint result){	    
 		result = a + b;
-		SumEvent("sum", result);
 	}
+	
+	function mul(uint a, uint b) returns (uint result){	    
+		result = a * b;
+	}
+	
+	function sub(uint a, uint b) returns (uint result){	    
+		result = a - b;
+	}
+	
+	function div(uint a, uint b) returns (uint result){	    
+		result = a / b;
+	}
+	
 }
