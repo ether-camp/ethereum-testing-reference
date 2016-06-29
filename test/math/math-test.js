@@ -89,14 +89,13 @@ describe('Math Contract Suite', function() {
 		  
 		  console.log("getting result");
 		  helper.waitForSandboxReceipt(sandbox.web3, txHash, function(err, receipt) {
-		    if (err) {console.log(err); return}; 
-			console.log(receipt.returnValue);
+		    if (err) return done(err);
+			
+				console.log(receipt.returnValue);
+  			/*inf*/ var end = new Date().getTime();
+      	/*inf*/ var time = (end - start)/1000; console.log(" < " + time  + "s >\n");
+      	done();
 		  });
-	  
-	  done();
-	  
-	  /*inf*/ var end = new Date().getTime();
-      /*inf*/ time = (end - start)/1000; console.log(" < " + time  + "s >\n");
   });
   
   
