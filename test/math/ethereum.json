@@ -10,14 +10,14 @@
     },
     "accounts": {
       "0xcd2a3d9f938e13cd947ec05abc7fe734df8dd826": {
-        "name": "curator",
+        "name": "fellow-1",
         "balance": 1000000000000000000000000,
         "nonce": "1430",
         "pkey": "cow",
         "default": true
       },
       "0xdedb49385ad5b94a16f236a6890cf9e0b1e30392": {
-        "name": "contractor",
+        "name": "fellow-2",
         "balance": 1000000000000000000,
         "nonce": "0x1cf",
         "pkey": "0x974f963ee4571e86e5f9bc3b493e453db9c15e5bd19829a4ef9a790de0da0015", 

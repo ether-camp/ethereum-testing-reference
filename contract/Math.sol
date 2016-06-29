@@ -2,8 +2,12 @@
 
 contract Math{
 
-	function doSum(uint a, uint b) returns (uint sum){
+    event SumEvent(string ID, uint result);
+
+	function sum(uint a, uint b) returns (uint result){
 	
-		sum = a + b;
+	    
+		result = a + b;
+		SumEvent("sum", result);
 	}
 }
