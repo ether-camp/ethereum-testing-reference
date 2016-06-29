@@ -3,6 +3,8 @@
 
 */
 var _ = require('lodash');
+var assert = require('assert');
+
 var Sandbox = require('ethereum-sandbox-client');
 var helper = require('ethereum-sandbox-helper');
 
@@ -85,17 +87,25 @@ describe('Math Contract Suite', function() {
       /*inf*/console.log(" [test-sum]");
 		  
 		  /* Call to deployed math contract */
-		  var txHash = math.sum(2, 2);
+		  txHash = math.sum(2, 2);
+		  expected = 4;
 		  
-		  console.log("getting result");
+		  /* Get the result */
 		  helper.waitForSandboxReceipt(sandbox.web3, txHash, function(err, receipt) {
 		    if (err) return done(err);
 			
-				console.log(receipt.returnValue);
-  			/*inf*/ var end = new Date().getTime();
-      	/*inf*/ var time = (end - start)/1000; console.log(" < " + time  + "s >\n");
-      	done();
+				result = sandbox.web3.toBigNumber(receipt.returnValue).toNumber() 
+
+				assert.equal(result, expected);
+				assert.notEqual(result, 5);
+				 
+				done();
 		  });
+
+	 /*inf*/ var end = new Date().getTime();
+     /*inf*/ var time = (end - start)/1000; console.log(" < " + time  + "s >\n");
+		  
+		  
   });
   
   
