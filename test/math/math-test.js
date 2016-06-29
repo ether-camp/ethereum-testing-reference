@@ -41,7 +41,14 @@ describe('Math Contract Suite', function() {
   });
   
   
-  
+  /*
+    TestCase: test-deploy 
+	Description: deploying the contract, 
+	 validating that the deployment was good.
+	 The deployed contract will be used for 
+	 contract call testing in the following 
+	 test cases.
+  */
   it('test-deploy', function(done) {
 	  /*inf*/console.log(" [test-deploy]");
 	  
@@ -70,21 +77,36 @@ describe('Math Contract Suite', function() {
   });
   
   
+  /*
+    TestCase: test-sum 
+	Description: test call to sum().
+  */
   it('test-sum', function(done) {
 	  /*inf*/console.log(" [test-sum]");
 	  
 	  /* Call to deployed math contract */
-	  result = math.sum(2, 2);		
+	  math.sum(2, 2);		
 	  
-	  console.log("filtering");
-	  var filter = sandbox.web3.eth.filter("sum");
-      filter.watch(function(error, result){
-		if (!error)
-			console.log(result);
-		else 
-			console.log(error); 	
+	  console.log("filtering...");
+
+	  /*
+	  var filter = sandbox.web3.eth.filter("latest");
+      
+	  filter.watch(function(error, result){
+		if (error) {
+			console.log(error);
+			return;
+		}
+		
+
+		console.log("filter fired");
 	  });
 	  
+	  
+	  
+	  this.timeout(10000);
+	  filter.stopWatching();
+	  */
 	  
 	  done();
 	  
