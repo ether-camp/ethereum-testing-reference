@@ -2,11 +2,12 @@
 
 contract ProposalOnVote{
  
-   string proposalText;
+  string proposalText;
    
-   uint votedYes = 0;
-   uint votedNo = 0;
-   
+  uint votedYes = 0;
+  uint votedNo = 0;
+  
+  mapping (address => bool) voted;
   
   // save already voted
   
@@ -21,15 +22,27 @@ contract ProposalOnVote{
 
   function voteYes(){
   
-	// todo check that the voter doesn't voted yet
+    if (voted[msg.sender]) throw;
+
+    voted[msg.sender] = true;
 	++votedYes;  
   }
+  
+  function voteNo(){
+  
+	// todo check that the voter doesn't voted yet
+	++votedNo;  
+  }
+  
   
   function getVotedYes() constant returns (uint result){
     result = votedYes;
   }
+
+  function getVotedNo() constant returns (uint result){
+    result = votedNo;
+  }
   
   
-  // method voteNo()
 
 }

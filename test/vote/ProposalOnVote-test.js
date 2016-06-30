@@ -175,7 +175,9 @@ describe('ProposalOnVote Contract Suite', function() {
       /* Constant call no transaction required */    
       var votedYes = proposal.getVotedYes();
       
-      assert.equal(votedYes.toNumber(), 20);
+      // after 20 calls the yes counter 
+      // is still 1 cause it was invoked by the same sender
+      assert.equal(votedYes.toNumber(), 1); 
       done();
     });
   });
