@@ -1,10 +1,11 @@
 
 
 [V] Math testing
-[ ] Add contract with state changes / constant calls
+[V] Add contract with state changes / constant calls
+[V] Raw transaction
+
 [ ] Structures
 [ ] Events testing
 [ ] Add test suite with 2 contracts calling each other (NameReg + Another One)
-[ ] Raw transaction
 
 test
