@@ -5,7 +5,7 @@
   },
   "dependencies": {
     "async": "^2.0.0-rc.5",
-    "ethereum-sandbox-client": "^1.0.0-beta2",
+    "ethereum-sandbox-client": "^1.0.0-beta3",
     "ethereum-sandbox-helper": "^1.0.0-beta1",
     "lodash": "^4.13.1",
     "mocha": "^2.5.3",
