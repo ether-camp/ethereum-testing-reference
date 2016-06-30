@@ -1,18 +1,22 @@
 
 
 contract ProposalOnVote{
- 
+
+  address owner;
   string proposalText;
    
   uint votedYes = 0;
   uint votedNo = 0;
   
   mapping (address => bool) voted;
+
+  bool finished = false;
   
   // save already voted
   
   function ProposalOnVote(string text){
-	proposalText = text;
+	owner = msg.sender;
+    proposalText = text;
   }
   
   function getProposalText() constant returns (string result){
@@ -22,6 +26,7 @@ contract ProposalOnVote{
 
   function voteYes(){
   
+    if (finished) throw;
     if (voted[msg.sender]) throw;
 
     voted[msg.sender] = true;
@@ -29,8 +34,11 @@ contract ProposalOnVote{
   }
   
   function voteNo(){
-  
-	// todo check that the voter doesn't voted yet
+
+    if (finished) throw;
+    if (voted[msg.sender]) throw;
+
+    voted[msg.sender] = true;
 	++votedNo;  
   }
   
@@ -43,6 +51,13 @@ contract ProposalOnVote{
     result = votedNo;
   }
   
+  function isFinished() constant returns (bool result){
+    result = finished;
+  }
   
+  function finishTheVote(){
+    if (owner != msg.sender) throw;
+    finished = true;
+  }
 
 }
