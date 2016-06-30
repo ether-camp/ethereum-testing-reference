@@ -347,12 +347,23 @@ describe('ProposalOnVote Contract Suite', function() {
          
   });
 
-  
+
   /*
-        
-         4. check if the proposition was recieved
-  
+    TestCase: check-accepted-result 
+    Description: 
   */
+  it('check-accepted-result', function(done) {
+    /*inf*/console.log(" check-accepted-result]");
+
+    var vNo = proposal.getVotedNo();
+    var vYes = proposal.getVotedYes();
+    
+    // Constant call no transaction required 
+    var acceptResult = proposal.isAccepted();
+    assert.equal(acceptResult, "REJECTED"); 
+    done();                     
+  });
+
 
 
   after(function(done) {

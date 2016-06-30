@@ -60,4 +60,12 @@ contract ProposalOnVote{
     finished = true;
   }
 
+  function isAccepted() constant returns (string result){
+    if (!finished) result = "IN PROGRESS";
+    
+    if (votedYes > votedNo) result = "ACCEPTED";
+    else result = "REJECTED";
+  }
+  
+  
 }
