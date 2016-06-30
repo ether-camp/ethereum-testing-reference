@@ -157,17 +157,17 @@ describe('ProposalOnVote Contract Suite', function() {
     
     async.times(20, function(n, next){
         sandbox.web3.eth.sendTransaction({
-	      from: "0xdedb49385ad5b94a16f236a6890cf9e0b1e30392",
-	      to: proposal.address,
-	      gas: 200000,
-	      value: sandbox.web3.toWei(1, 'ether'),
-	      data: callData
-	    }, function(err, txHash) {
+          from: "0xdedb49385ad5b94a16f236a6890cf9e0b1e30392",
+          to: proposal.address,
+          gas: 200000,
+          value: sandbox.web3.toWei(1, 'ether'),
+          data: callData
+        }, function(err, txHash) {
         if (err) return next(err);
             
         // we are waiting for blockchain to accept the transaction 
         helper.waitForReceipt(sandbox.web3, txHash, next);
-	    });    
+        });    
     }, function(err) {
       
       if (err) return done(err);
@@ -205,17 +205,17 @@ describe('ProposalOnVote Contract Suite', function() {
     
     async.times(5, function(n, next){
         sandbox.web3.eth.sendTransaction({
-	      from: voters[n],
-	      to: proposal.address,
-	      gas: 200000,
-	      value: sandbox.web3.toWei(1, 'ether'),
-	      data: callData
-	    }, function(err, txHash) {
+          from: voters[n],
+          to: proposal.address,
+          gas: 200000,
+          value: sandbox.web3.toWei(1, 'ether'),
+          data: callData
+        }, function(err, txHash) {
         if (err) return next(err);
             
-        // we are waiting for blockchain to accept the transaction 
-        helper.waitForReceipt(sandbox.web3, txHash, next);
-	    });    
+          // we are waiting for blockchain to accept the transaction 
+          helper.waitForReceipt(sandbox.web3, txHash, next);
+        });    
     }, function(err) {
       
       if (err) return done(err);
