@@ -126,7 +126,7 @@ describe('ProposalOnVote Contract Suite', function() {
         if (err) return done(err);
             
         // we are waiting for blockchain to accept the transaction 
-        helper.waitForReceipt(sandbox.web3, txHash, assertVotedYes(done));    
+        helper.waitForReceipt(sandbox.web3, txHash, assertVotedYes.bind(null, done));    
     });
          
   });
@@ -134,12 +134,10 @@ describe('ProposalOnVote Contract Suite', function() {
   function assertVotedYes(done){
 
     /* Constant call no transaction required */
-    return function() {
-    	var votedYes = proposal.getVotedYes();
-    	assert.equal(votedYes.toNumber(), 1); 
-    
-    	done();
-    };
+    var votedYes = proposal.getVotedYes();
+    assert.equal(votedYes.toNumber(), 1); 
+
+    done();
   }
   
   /*
@@ -170,20 +168,18 @@ describe('ProposalOnVote Contract Suite', function() {
         // we are waiting for blockchain to accept the transaction 
         helper.waitForReceipt(sandbox.web3, txHash, next);
 	    });    
-    }, function(err, users) {
-    	if (err) return done(err);
+    }, function(err) {
+      
+      if (err) return done(err);
+      
       /* Constant call no transaction required */    
       var votedYes = proposal.getVotedYes();
-      log(" *** voted yes: " +  votedYes.toNumber());
+      
+      assert.equal(votedYes.toNumber(), 20);
       done();
     });
   });
-  
-  
-
-
-  
-  
+    
   after(function(done) {
     
     /*inf*/console.log(" [sandbox stopping]");
