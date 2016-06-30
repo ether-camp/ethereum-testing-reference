@@ -235,11 +235,11 @@ describe('ProposalOnVote Contract Suite', function() {
 
 
   /*
-    TestCase: finish-the-vote
+    TestCase: finish-the-vote-not-owner
     Description: 
   */
-  it('finish-the-vote', function(done) {
-    /*inf*/console.log(" [finish-the-vote]");
+  it('finish-the-vote-not-owner', function(done) {
+    /*inf*/console.log(" [finish-the-vote-not-owner]");
     
     // sending transaction arbitrary signed
     // no peer keystore is involved and that
@@ -269,6 +269,44 @@ describe('ProposalOnVote Contract Suite', function() {
             });
         });    
   });
+
+
+  /*
+    TestCase: finish-the-vote
+    Description: 
+  */
+  it('finish-the-vote', function(done) {
+    /*inf*/console.log(" [finish-the-vote]");
+    
+    // sending transaction arbitrary signed
+    // no peer keystore is involved and that
+    // type of encoding can be used directly 
+    // out of any browser
+    var funcABI = { "constant": false, "inputs": [], "name": "finishTheVote", "outputs": [], "type": "function"};
+    var func = new SolidityFunction(sandbox.web3, funcABI, proposal.address);
+    var callData = func.toPayload([]).data;
+    
+    sandbox.web3.eth.sendTransaction({
+          from: "0xcd2a3d9f938e13cd947ec05abc7fe734df8dd826",
+          to: proposal.address,
+          gas: 200000,
+          value: sandbox.web3.toWei(1, 'ether'),
+          data: callData
+        }, function(err, txHash) {
+            if (err) done(err);
+            
+            // we are waiting for blockchain to accept the transaction 
+            helper.waitForReceipt(sandbox.web3, txHash, function(){
+            
+                // asserting that there was no change
+                // made: the call was not by owner
+                var finished = proposal.isFinished();
+                assert.equal(finished, true);
+                done();
+            });
+        });    
+  });
+
 
   
   /*
