@@ -183,17 +183,17 @@ describe('ProposalOnVote Contract Suite', function() {
   });
     
   /*
-    TestCase: check-vote-yes-in-loop-same-address
+    TestCase: check-vote-no-in-loop-same-address
     Description: 
   */
-  it('check-vote-yes-in-loop-5-addresses', function(done) {
+  it('check-vote-no-in-loop-5-addresses', function(done) {
     /*inf*/console.log(" [check-vote-yes-in-loop-5-addresses]");
     
     // sending transaction arbitrary signed
     // no peer keystore is involved and that
     // type of encoding can be used directly 
     // out of any browser
-    var funcABI = { "constant": false, "inputs": [], "name": "voteYes", "outputs": [], "type": "function"};
+    var funcABI = { "constant": false, "inputs": [], "name": "voteNo", "outputs": [], "type": "function"};
     var func = new SolidityFunction(sandbox.web3, funcABI, proposal.address);
     var callData = func.toPayload([]).data;
     
@@ -204,6 +204,7 @@ describe('ProposalOnVote Contract Suite', function() {
                     "0xf58366fc9d73d88b27fbbc35f1efd21232a38ce6"];
     
     async.times(5, function(n, next){
+        
         sandbox.web3.eth.sendTransaction({
           from: voters[n],
           to: proposal.address,
@@ -216,20 +217,31 @@ describe('ProposalOnVote Contract Suite', function() {
           // we are waiting for blockchain to accept the transaction 
           helper.waitForReceipt(sandbox.web3, txHash, next);
         });    
+        
     }, function(err) {
       
       if (err) return done(err);
       
-      /* Constant call no transaction required */    
-      var votedYes = proposal.getVotedYes();
+      /* constant call: no transaction required */    
+      var votedNo = proposal.getVotedNo();
       
-      // after 20 calls the yes counter 
-      // is still 1 cause it was invoked by the same sender
-      assert.equal(votedYes.toNumber(), 6); 
+      // after 5 calls the no counter 
+      // is 5 cause it was voted by different 
+      // addresses
+      assert.equal(votedNo.toNumber(), 6); 
       done();
     });
   });
 
+  
+  /*
+        TODO: 
+         1. add loop for 2 no votes
+         2. add voting finished method
+         3. try to vote after time
+         4. check if the proposition was recieved
+  
+  */
 
 
   after(function(done) {
