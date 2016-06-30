@@ -112,9 +112,9 @@ describe('ProposalOnVote Contract Suite', function() {
 	// no peer keystore is involved and that
 	// type of encoding can be used directly 
 	// out of any browser
-	funcABI = 	{ "constant": false, "inputs": [], "name": "voteYes", "outputs": [], "type": "function"};
+    funcABI = 	{ "constant": false, "inputs": [], "name": "voteYes", "outputs": [], "type": "function"};
     var func = new SolidityFunction(sandbox.web3,   funcABI, proposal.address);
-	var callData = func.toPayload([]).data;	
+    var callData = func.toPayload([]).data;	
 	
 	sandbox.web3.eth.sendTransaction({
         from: "0xdedb49385ad5b94a16f236a6890cf9e0b1e30392",
@@ -151,9 +151,9 @@ describe('ProposalOnVote Contract Suite', function() {
 	// no peer keystore is involved and that
 	// type of encoding can be used directly 
 	// out of any browser
-	funcABI = 	{ "constant": false, "inputs": [], "name": "voteYes", "outputs": [], "type": "function"};
+    funcABI = 	{ "constant": false, "inputs": [], "name": "voteYes", "outputs": [], "type": "function"};
     var func = new SolidityFunction(sandbox.web3,   funcABI, proposal.address);
-	var callData = func.toPayload([]).data;	
+    var callData = func.toPayload([]).data;	
 	
 	async.times(10, function(n, next){
 		sandbox.web3.eth.sendTransaction({
