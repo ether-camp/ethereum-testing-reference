@@ -308,12 +308,48 @@ describe('ProposalOnVote Contract Suite', function() {
   });
 
 
+  /*
+    TestCase: check-vote-after-finish 
+    Description: 
+  */
+  it('check-vote-after-finish', function(done) {
+    /*inf*/console.log(" [check-vote-after-finish]");
+    
+    // sending transaction arbitrary signed
+    // no peer keystore is involved and that
+    // type of encoding can be used directly 
+    // out of any browser
+    var funcABI = { "constant": false, "inputs": [], "name": "voteYes", "outputs": [], "type": "function"};
+    var func = new SolidityFunction(sandbox.web3, funcABI, proposal.address);
+    var callData = func.toPayload([]).data;    
+    
+    sandbox.web3.eth.sendTransaction({
+        from: "0x1ee52b26b2362ea0afb42785e0c7f3400fffac0b",
+        to: proposal.address,
+        gas: 200000,
+        value: sandbox.web3.toWei(1, 'ether'),
+        data: callData
+    }, function(err, txHash) {
+        if (err) return done(err);
+            
+        // we are waiting for blockchain to accept the transaction 
+        helper.waitForReceipt(sandbox.web3, txHash, function(){
+            
+            // Constant call no transaction required 
+            var votedYes = proposal.getVotedYes();
+            
+            // no change to the votes cause the 
+            // poll was finished
+            assert.equal(votedYes.toNumber(), 1); 
+            done();            
+        });    
+    });
+         
+  });
+
   
   /*
-        TODO: 
-         [V] add loop for 2 no votes
-         2. add voting finished method
-         3. try to vote after time
+        
          4. check if the proposition was recieved
   
   */

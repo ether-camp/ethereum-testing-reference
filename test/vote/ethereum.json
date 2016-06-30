@@ -63,8 +63,16 @@
         "nonce": "0x1cf",
         "pkey": "fellow-7", 
         "default": false
-      }
+      },
       
+      "0x1ee52b26b2362ea0afb42785e0c7f3400fffac0b": {
+        "name": "fellow-8",
+        "balance": 1000000000000000000000000000000000000,
+        "nonce": "0x0",
+        "pkey": "fellow-8", 
+        "default": false
+      }
+
       
     }
   }
