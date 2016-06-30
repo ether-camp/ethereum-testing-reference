@@ -10,6 +10,9 @@
     "lodash": "^4.13.1",
     "mocha": "^2.5.3",
     "solc": "^0.3.4",
-    "web3": "^0.17.0-alpha"
+    
+	"web3": "^0.17.0-alpha",	
+	"ethereumjs-tx": "^1.0.0",
+    "ethereumjs-util": "^4.0.0"
   }
 }
