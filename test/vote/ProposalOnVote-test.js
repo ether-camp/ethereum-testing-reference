@@ -187,7 +187,7 @@ describe('ProposalOnVote Contract Suite', function() {
     Description: 
   */
   it('check-vote-no-in-loop-5-addresses', function(done) {
-    /*inf*/console.log(" [check-vote-yes-in-loop-5-addresses]");
+    /*inf*/console.log(" [check-vote-no-in-loop-5-addresses]");
     
     // sending transaction arbitrary signed
     // no peer keystore is involved and that
@@ -228,7 +228,7 @@ describe('ProposalOnVote Contract Suite', function() {
       // after 5 calls the no counter 
       // is 5 cause it was voted by different 
       // addresses
-      assert.equal(votedNo.toNumber(), 6); 
+      assert.equal(votedNo.toNumber(), 5); 
       done();
     });
   });
