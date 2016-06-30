@@ -11,7 +11,10 @@ var helper = require('ethereum-sandbox-helper');
 var SolidityFunction = require('web3/lib/web3/function');
 var ethTx = require('ethereumjs-tx');
 
+var async = require('async');
 var start = new Date().getTime();
+
+var log = console.log;
 
 
 describe('ProposalOnVote Contract Suite', function() {
@@ -136,6 +139,50 @@ describe('ProposalOnVote Contract Suite', function() {
 	
 	done();
   }
+  
+  /*
+    TestCase: check-vote-yes-in-loop 
+	Description: 
+  */
+  it('check-vote-yes-in-loop', function(done) {
+	/*inf*/console.log(" [check-vote-yes]");
+	
+	// sending transaction arbitrary signed
+	// no peer keystore is involved and that
+	// type of encoding can be used directly 
+	// out of any browser
+	funcABI = 	{ "constant": false, "inputs": [], "name": "voteYes", "outputs": [], "type": "function"};
+    var func = new SolidityFunction(sandbox.web3,   funcABI, proposal.address);
+	var callData = func.toPayload([]).data;	
+	
+	async.times(10, function(n, next){
+		sandbox.web3.eth.sendTransaction({
+			from: "0xdedb49385ad5b94a16f236a6890cf9e0b1e30392",
+			to: proposal.address,
+			gas: 200000,
+			value: sandbox.web3.toWei(1, 'ether'),
+			data: callData
+		}, function(err, txHash) {
+			if (err) done(err);
+				
+			// we are waiting for blockchain to accept the transaction 
+			helper.waitForReceipt(sandbox.web3, txHash);	
+			next();
+		});	
+	}, function(err, users) {
+
+	  /* Constant call no transaction required */	
+	  var votedYes = proposal.getVotedYes();
+	
+	  log(votedYes);
+	  done();
+	});
+	
+	
+		 
+  });
+  
+  
 
 
   
