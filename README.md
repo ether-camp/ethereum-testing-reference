@@ -31,7 +31,8 @@ https://github.com/ether-camp/ethereum-testing-reference/blob/master/test/math/m
 https://github.com/ether-camp/ethereum-testing-reference/blob/master/test/vote/ProposalOnVote-test.js
 
 ### Inter contract communication
-https://github.com/ether-camp/ethereum-testing-reference/blob/master/test/vote/ProposalOnVote-test.js
+
+[chain-call-test.js](https://github.com/ether-camp/ethereum-testing-reference/blob/master/test/chain/chain-call-test.js)
 
 
 ## Detailed Explanation
