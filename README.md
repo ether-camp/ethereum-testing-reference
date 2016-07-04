@@ -25,13 +25,13 @@ npm test
 ##  What test cases included ?  
 
 ### Simple Solidity contract  
-https://github.com/ether-camp/test-starter/tree/master/test/math/math.js
+https://github.com/ether-camp/ethereum-testing-reference/tree/master/test/math/math.js
 
 ### More Complex contract state management
-https://github.com/ether-camp/test-starter/blob/master/test/vote/ProposalOnVote-test.js
+https://github.com/ether-camp/ethereum-testing-reference/blob/master/test/vote/ProposalOnVote-test.js
 
 ### Inter contract communication
-https://github.com/ether-camp/test-starter/blob/master/test/vote/ProposalOnVote-test.js
+https://github.com/ether-camp/ethereum-testing-reference/blob/master/test/vote/ProposalOnVote-test.js
 
 
 ## Detailed Explanation
