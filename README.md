@@ -1,8 +1,8 @@
 # Ethereum Testing Reference
 
 ```
-This suite of test cases is complete demonstartion 
-of Simple Ethereum testing system for solidity smart 
+This suite of test cases is the complete demonstartion 
+of simple Ethereum testing system for Solidity smart 
 contracts.
 ```
 
