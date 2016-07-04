@@ -19,11 +19,16 @@ contract ProposalOnVote{
     proposalText = text;
   }
   
-  function getProposalText() constant returns (string result){
+  function getProposalText() /* Modifiers */
+                             constant 
+                             returns (string result){
      result = proposalText;
   }
   
 
+  /**
+   * Description: vote yes on the proposal
+   */
   function voteYes(){
   
     if (finished) throw;
@@ -33,6 +38,10 @@ contract ProposalOnVote{
 	++votedYes;  
   }
   
+
+  /**
+   * Description: vote yes on the proposal
+   */
   function voteNo(){
 
     if (finished) throw;
@@ -43,24 +52,49 @@ contract ProposalOnVote{
   }
   
   
-  function getVotedYes() constant returns (uint result){
+  /**
+   * Description: check how many voted yes
+   */
+  function getVotedYes() /* Modifiers */
+                         constant 
+                         returns (uint result){
     result = votedYes;
   }
 
-  function getVotedNo() constant returns (uint result){
+  /**
+   * Description: check how many voted no
+   */
+  function getVotedNo() /* Modifiers */
+                        constant 
+                        returns (uint result){
     result = votedNo;
   }
   
-  function isFinished() constant returns (bool result){
+  /**
+   * Description: check if the vote process is 
+                  finished
+   */
+  function isFinished() /* Modifiers */
+                        constant 
+                        returns (bool result){
     result = finished;
   }
   
+  /**
+   * Description: owner can finish the vote proces 
+   */  
   function finishTheVote(){
     if (owner != msg.sender) throw;
     finished = true;
   }
 
-  function isAccepted() constant returns (string result){
+  /**
+   * Description: check if the proposal was accepted 
+   */  
+  function isAccepted() /* Modifiers */
+                        constant 
+                        returns (string result){
+                        
     if (!finished) result = "IN PROGRESS";
     
     if (votedYes > votedNo) result = "ACCEPTED";
