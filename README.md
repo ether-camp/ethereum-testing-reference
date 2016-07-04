@@ -25,7 +25,7 @@ npm test
 ##  What test cases included ?  
 
 ### Simple Solidity contract  
-https://github.com/ether-camp/ethereum-testing-reference/tree/master/test/math/math.js
+https://github.com/ether-camp/ethereum-testing-reference/blob/master/test/math/math-test.js
 
 ### More Complex contract state management
 https://github.com/ether-camp/ethereum-testing-reference/blob/master/test/vote/ProposalOnVote-test.js
