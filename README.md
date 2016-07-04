@@ -133,7 +133,7 @@ The perfect test case should look like this:
 
 ## ethereum.json - sandbox configuration file: 
 
-Check the full example here: [ethereum.json](https://github.com/ether-camp/ethereum-testing-reference/blob/master/test/math/ethereum.json)
+Check the full example here: [ethereum.json](https://github.com/ether-camp/ethereum-testing-reference/blob/master/test/chain/ethereum.json)
 
 #### How to add an account to the sandbox
 ```json
