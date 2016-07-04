@@ -77,8 +77,6 @@ describe('ProposalOnVote Contract Suite', function() {
     /* Constant call no transaction required */    
     var recivedText = proposal.getProposalText();
     assert(recivedText, proposalText);
-        
-    done();
   });
   
   /*
@@ -349,7 +347,6 @@ describe('ProposalOnVote Contract Suite', function() {
     // Constant call no transaction required 
     var acceptResult = proposal.isAccepted();
     assert.equal(acceptResult, "REJECTED"); 
-    done();                     
   });
 
 
