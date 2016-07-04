@@ -74,7 +74,7 @@ NameReg usage...
 While doing testing we want to focus mostly on 
 our buisness logic and forget everything that 
 is related to infrastrucure: no network , no 
-peers and as much as possible config involved.
+peers and as much as possible no config involved.
 
 
 The perfect test case should look like this: 
@@ -88,6 +88,8 @@ The perfect test case should look like this:
  end. Tear all down
 
 ```
+
+##### Here is how it looks like in code:  
 
 
 ```javascript
