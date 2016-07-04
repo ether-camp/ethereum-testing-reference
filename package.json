@@ -1,7 +1,7 @@
 {
   "name": "starter",
   "scripts": {
-    "test": "mocha test/**/*-test.js"
+    "test": "mocha test/**/*-test.js --reporter mochawesome"
   },
   "dependencies": {
     "async": "^2.0.0-rc.5",
