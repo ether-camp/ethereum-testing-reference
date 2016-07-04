@@ -1,7 +1,6 @@
 /*
-
-
-*/
+ * Testing for ${home}/contract/ProposalOnVote.sol
+ */
 var _ = require('lodash');
 var assert = require('assert');
 
@@ -21,32 +20,13 @@ describe('ProposalOnVote Contract Suite', function() {
   this.timeout(60000);
   var sandbox = new Sandbox('http://localhost:8554');
   
-  
-  /*inf*/ console.log("Compiling ['ProposalOnVote.sol'] files");
-  
   var compiled = helper.compile('./contract', ['ProposalOnVote.sol']);
   var proposalText = "Donald Trump For President of United States";
-  
-  /*inf*/
-      if (compiled.errors){
-        console.log(compiled.errors)
-      }
-      else{
-        console.log("Compilation Success");  
-        console.log("");
-      }
-  /*inf*/
-  
   var proposal;
   
   
   before(function(done) {
-     /*inf*/console.log(" [sandbox starting]");
-
     sandbox.start(__dirname + '/ethereum.json', done);
-
-    /*inf*/ var end = new Date().getTime();
-    /*inf*/ time = (end - start)/1000; console.log(" < " + time  + "s >\n");
   });
   
   
@@ -92,7 +72,7 @@ describe('ProposalOnVote Contract Suite', function() {
                  proposal text worked as expected
   */
   it('check-init', function(done) {
-    /*inf*/console.log(" [check-init]");
+    log(" [check-init]");
 
     /* Constant call no transaction required */    
     var recivedText = proposal.getProposalText();
@@ -106,7 +86,7 @@ describe('ProposalOnVote Contract Suite', function() {
     Description: 
   */
   it('check-vote-yes', function(done) {
-    /*inf*/console.log(" [check-vote-yes]");
+    log(" [check-vote-yes]");
     
     // sending transaction arbitrary signed
     // no peer keystore is involved and that
@@ -142,10 +122,14 @@ describe('ProposalOnVote Contract Suite', function() {
   
   /*
     TestCase: check-vote-yes-in-loop-same-address
-    Description: 
+    Description: In that test case we will run 20 transactions
+                 in loop, while each of them will vote yes on the 
+                 smart contract. The nuance is that all of the 
+                 transactions are invoked with the same address so 
+                 the vote will not be counted.                 
   */
   it('check-vote-yes-in-loop-same-address', function(done) {
-    /*inf*/console.log(" [check-vote-yes-in-loop-same-address]");
+    log(" [check-vote-yes-in-loop-same-address]");
     
     // sending transaction arbitrary signed
     // no peer keystore is involved and that
@@ -184,7 +168,8 @@ describe('ProposalOnVote Contract Suite', function() {
     
   /*
     TestCase: check-vote-no-in-loop-same-address
-    Description: 
+    Description: Now we do 5 voting transaction each with 
+                 different address.
   */
   it('check-vote-no-in-loop-5-addresses', function(done) {
     /*inf*/console.log(" [check-vote-no-in-loop-5-addresses]");
@@ -212,11 +197,12 @@ describe('ProposalOnVote Contract Suite', function() {
           value: sandbox.web3.toWei(1, 'ether'),
           data: callData
         }, function(err, txHash) {
-        if (err) return next(err);
-            
-          // we are waiting for blockchain to accept the transaction 
-          helper.waitForReceipt(sandbox.web3, txHash, next);
-        });    
+
+                if (err) return next(err);
+                    
+                  // we are waiting for blockchain to accept the transaction 
+                  helper.waitForReceipt(sandbox.web3, txHash, next);
+                });    
         
     }, function(err) {
       
@@ -236,10 +222,11 @@ describe('ProposalOnVote Contract Suite', function() {
 
   /*
     TestCase: finish-the-vote-not-owner
-    Description: 
+    Description: Trying to finish the voting process 
+                 with not authorized address.
   */
   it('finish-the-vote-not-owner', function(done) {
-    /*inf*/console.log(" [finish-the-vote-not-owner]");
+    log(" [finish-the-vote-not-owner]");
     
     // sending transaction arbitrary signed
     // no peer keystore is involved and that
@@ -273,10 +260,10 @@ describe('ProposalOnVote Contract Suite', function() {
 
   /*
     TestCase: finish-the-vote
-    Description: 
+    Description: Finish the voting process correctly
   */
   it('finish-the-vote', function(done) {
-    /*inf*/console.log(" [finish-the-vote]");
+    log(" [finish-the-vote]");
     
     // sending transaction arbitrary signed
     // no peer keystore is involved and that
@@ -310,7 +297,8 @@ describe('ProposalOnVote Contract Suite', function() {
 
   /*
     TestCase: check-vote-after-finish 
-    Description: 
+    Description: Try to make the vote after the 
+                 voting process was done.
   */
   it('check-vote-after-finish', function(done) {
     /*inf*/console.log(" [check-vote-after-finish]");
@@ -350,7 +338,7 @@ describe('ProposalOnVote Contract Suite', function() {
 
   /*
     TestCase: check-accepted-result 
-    Description: 
+    Description: Check the result of the proposal
   */
   it('check-accepted-result', function(done) {
     /*inf*/console.log(" check-accepted-result]");
@@ -367,11 +355,6 @@ describe('ProposalOnVote Contract Suite', function() {
 
 
   after(function(done) {
-    
-    /*inf*/console.log(" [sandbox stopping]");
     sandbox.stop(done);
-
-    /*inf*/ var end = new Date().getTime();
-    /*inf*/ time = (end - start)/1000; console.log(" < " + time  + "s >\n");
   });
 });

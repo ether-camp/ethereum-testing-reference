@@ -1,45 +1,27 @@
 /*
-
-
-*/
+ * Testing for ${home}/contract/math.sol
+ */
 var _ = require('lodash');
 var assert = require('assert');
 
 var Sandbox = require('ethereum-sandbox-client');
 var helper = require('ethereum-sandbox-helper');
-
-var start = new Date().getTime();
+var log    = console.log;
 
 
 describe('Math Contract Suite', function() {
+
+  // init sandbox
   this.timeout(60000);
   var sandbox = new Sandbox('http://localhost:8554');
   
-  
-  /*inf*/ console.log("Compiling ['Math.sol'] files");
-  
+  // compile the contract
   var compiled = helper.compile('./contract', ['Math.sol']);
-  
-  /*inf*/
-	  if (compiled.errors){
-		console.log(compiled.errors)
-	  }
-	  else{
-		console.log("Comilation Success");  
-		console.log("");
-	  }
-  /*inf*/
-  
   var math;
   
   
   before(function(done) {
-     /*inf*/console.log(" [sandbox starting]");
-
     sandbox.start(__dirname + '/ethereum.json', done);
-
-    /*inf*/ var end = new Date().getTime();
-    /*inf*/ time = (end - start)/1000; console.log(" < " + time  + "s >\n");
   });
   
   
@@ -52,7 +34,7 @@ describe('Math Contract Suite', function() {
 	 test cases.
   */
   it('test-deploy', function(done) {
-	  /*inf*/console.log(" [test-deploy]");
+	    log(" [test-deploy]");
 	  
 		sandbox.web3.eth.contract(JSON.parse(compiled.contracts['Math'].interface)).new({
 			  
@@ -69,7 +51,9 @@ describe('Math Contract Suite', function() {
 				done(err);
 			}
 			else if (contract.address){
-				math = contract;
+				
+                // save reference to deployed contract
+                math = contract;
 				done();
 			}			
 		});	  
@@ -82,7 +66,7 @@ describe('Math Contract Suite', function() {
 	Description: test call to sum().
   */
   it('test-sum', function(done) {
-  /*inf*/console.log(" [test-sum]");
+      log(" [test-sum]");
 	  
 	  /* Call to deployed math contract */
 	  txHash = math.sum(2, 2);
@@ -107,7 +91,7 @@ describe('Math Contract Suite', function() {
 	Description: test call to mul().
   */
   it('test-mul', function(done) {
-   /*inf*/console.log(" [test-mul]");
+      log(" [test-mul]");
 	  
 	  /* Call to deployed math contract */
 	  txHash = math.mul(3, 3);
@@ -133,7 +117,7 @@ describe('Math Contract Suite', function() {
 	Description: test call to sub().
   */
   it('test-sub', function(done) {
-   /*inf*/console.log(" [test-sub]");
+      log(" [test-sub]");
 	  
 	  /* Call to deployed math contract */
 	  txHash = math.sub(16, 3);
@@ -159,7 +143,7 @@ describe('Math Contract Suite', function() {
 	Description: test call to div().
   */
   it('test-div', function(done) {
-   /*inf*/console.log(" [test-div]");
+      log(" [test-div]");
 	  
 	  /* Call to deployed math contract */
 	  txHash = math.div(16, 4);
@@ -181,11 +165,6 @@ describe('Math Contract Suite', function() {
   
   
   after(function(done) {
-    
-    /*inf*/console.log(" [sandbox stopping]");
-	sandbox.stop(done);
-
-	/*inf*/ var end = new Date().getTime();
-    /*inf*/ time = (end - start)/1000; console.log(" < " + time  + "s >\n");
+    sandbox.stop(done);
   });
 });
