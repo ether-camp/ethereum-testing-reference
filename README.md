@@ -25,7 +25,14 @@ npm test
 ##  What test cases included ?  
 
 ### Simple Solidity contract  
-https://github.com/ether-camp/ethereum-testing-reference/blob/master/test/math/math-test.js
+[math-test.js](https://github.com/ether-camp/ethereum-testing-reference/blob/master/test/math/math-test.js)
+```
+Testing for simple contract calls like: 
+
+	function sum(uint a, uint b) returns (uint result){	    
+		result = a + b;
+	}
+```
 
 ### More Complex contract state management
 https://github.com/ether-camp/ethereum-testing-reference/blob/master/test/vote/ProposalOnVote-test.js
