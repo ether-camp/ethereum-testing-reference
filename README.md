@@ -35,12 +35,28 @@ Testing for simple contract calls like:
 ```
 
 ### More Complex contract state management
-https://github.com/ether-camp/ethereum-testing-reference/blob/master/test/vote/ProposalOnVote-test.js
+[ProposalOnVote-test.js](https://github.com/ether-camp/ethereum-testing-reference/blob/master/test/vote/ProposalOnVote-test.js)
+```
+Testing for contract state management.
+The simple voting system: 
+
+  function voteYes(){
+  
+    if (finished) throw;
+    if (voted[msg.sender]) throw;
+
+    voted[msg.sender] = true;
+	++votedYes;  
+  }
+```
 
 ### Inter contract communication
 
 [chain-call-test.js](https://github.com/ether-camp/ethereum-testing-reference/blob/master/test/chain/chain-call-test.js)
-
+```
+Contract call to contract, 
+NameReg usage...
+```
 
 ## Detailed Explanation
 
