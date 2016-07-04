@@ -39,7 +39,7 @@ describe('ProposalOnVote Contract Suite', function() {
      test cases.
   */
   it('test-deploy', function(done) {
-      /*inf*/console.log(" [test-deploy]");
+      log(" [test-deploy]");
       
         sandbox.web3.eth.contract(JSON.parse(compiled.contracts['ProposalOnVote'].interface)).new(
         proposalText, 
@@ -170,7 +170,7 @@ describe('ProposalOnVote Contract Suite', function() {
                  different address.
   */
   it('check-vote-no-in-loop-5-addresses', function(done) {
-    /*inf*/console.log(" [check-vote-no-in-loop-5-addresses]");
+    log(" [check-vote-no-in-loop-5-addresses]");
     
     // sending transaction arbitrary signed
     // no peer keystore is involved and that
@@ -299,7 +299,7 @@ describe('ProposalOnVote Contract Suite', function() {
                  voting process was done.
   */
   it('check-vote-after-finish', function(done) {
-    /*inf*/console.log(" [check-vote-after-finish]");
+    log(" [check-vote-after-finish]");
     
     // sending transaction arbitrary signed
     // no peer keystore is involved and that
@@ -339,7 +339,7 @@ describe('ProposalOnVote Contract Suite', function() {
     Description: Check the result of the proposal
   */
   it('check-accepted-result', function(done) {
-    /*inf*/console.log(" check-accepted-result]");
+    log(" check-accepted-result]");
 
     var vNo = proposal.getVotedNo();
     var vYes = proposal.getVotedYes();
