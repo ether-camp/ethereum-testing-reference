@@ -110,16 +110,17 @@ The perfect test case should look like this:
 	  /* contract bytecode */ 
 	  data: '0x' + compiled.contracts['Math'].bytecode			
   },  function(err, contract) {
-         
+        
+        
         // callback for deployment finish 		
-	if (err) {
-		done(err);
-	} else if (contract.address){
+        if (err) {
+            done(err);
+        } else if (contract.address){
   		
-  		// save contract reference 
-  		// in global var
-  		math = contract;
-	  	done();
+  	     // save contract reference 
+  	     // in global var
+  	     math = contract;
+  	     done();
 	}			
   });	  
 
