@@ -243,7 +243,7 @@ describe('ProposalOnVote Contract Suite', function() {
           value: sandbox.web3.toWei(1, 'ether'),
           data: callData
         }, function(err, txHash) {
-            if (err) done(err);
+            if (err) return done(err);
             
             // we are waiting for blockchain to accept the transaction 
             helper.waitForReceipt(sandbox.web3, txHash, function(){
@@ -280,7 +280,7 @@ describe('ProposalOnVote Contract Suite', function() {
           value: sandbox.web3.toWei(1, 'ether'),
           data: callData
         }, function(err, txHash) {
-            if (err) done(err);
+            if (err) return done(err);
             
             // we are waiting for blockchain to accept the transaction 
             helper.waitForReceipt(sandbox.web3, txHash, function(){
