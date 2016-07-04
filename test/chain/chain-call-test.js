@@ -1,7 +1,6 @@
 /*
-
-
-*/
+ * Testing for ${home}/contract/chain-call-test.sol
+ */
 var _ = require('lodash');
 var assert = require('assert');
 
@@ -21,40 +20,22 @@ describe('Chain Contract Suite', function() {
   this.timeout(60000);
   var sandbox = new Sandbox('http://localhost:8554');
   
-  
-  /*inf*/ console.log("Compiling ['ContractA.sol', 'ContractB.sol'] files");
-  
   var compiled = helper.compile('./contract',  ['ContractA.sol', 'ContractB.sol']);
-  
-  /*inf*/
-      if (compiled.errors){
-        console.log(compiled.errors)
-      }
-      else{
-        console.log("Compilation Success");  
-        console.log("");
-      }
-  /*inf*/
   
   var contractA;
   
   
   before(function(done) {
-     /*inf*/console.log(" [sandbox starting]");
-
     sandbox.start(__dirname + '/ethereum.json', done);
-
-    /*inf*/ var end = new Date().getTime();
-    /*inf*/ time = (end - start)/1000; console.log(" < " + time  + "s >\n");
   });
   
   
   /*
     TestCase: test-deploy-a
-    Description: 
+    Description: Deploy ContractA
   */
   it('test-deploy-a', function(done) {
-      /*inf*/console.log(" [test-deploy-a]");
+      log(" [test-deploy-a]");
       
         sandbox.web3.eth.contract(JSON.parse(compiled.contracts['ContractA'].interface)).new(         
         {
@@ -81,7 +62,7 @@ describe('Chain Contract Suite', function() {
   
   /*
     TestCase: test-deploy-b
-    Description: 
+    Description: Deploy ContractB
   */
   it('test-deploy-b', function(done) {
       /*inf*/console.log(" [test-deploy-b]");
@@ -113,7 +94,8 @@ describe('Chain Contract Suite', function() {
   
   /**
    * TestCase: check-init 
-   * Description: 
+   * Description: Trying that the ContractA and 
+   *              ContractB process was good.               
    */
   it('check-init', function(done) {
     /*inf*/console.log(" [check-init]");
@@ -121,13 +103,16 @@ describe('Chain Contract Suite', function() {
     var owner = contractA.getOwner();
     assert.equal(owner, "0xcd2a3d9f938e13cd947ec05abc7fe734df8dd826");    
         
+    owner = contractB.getOwner();
+    assert.equal(owner, "0xcd2a3d9f938e13cd947ec05abc7fe734df8dd826");    
+
     done();
   });
 
 
   /**
    * TestCase: get-address-from-namereg 
-   * Description: 
+   * Description: Testing access to ${home}/predeployed/name-reg.sol 
    */
   it('get-address-from-namereg', function(done) {
     /*inf*/console.log(" [get-address-from-namereg]");
@@ -199,10 +184,15 @@ describe('Chain Contract Suite', function() {
   
   /**
    * TestCase: contract-call-namereg 
-   * Description: 
+   * Description: Contract call contract test case.  
+                  
+                  [ContractA] --[addressOf]--> [NameReg] 
+                  
+                  ContractA ask NameReg for a addressOf()
+                  resolving.
    */
   it('contract-call-namereg', function(done) {
-    /*inf*/console.log(" [contract-call-namereg]");
+    log(" [contract-call-namereg]");
 
     var contractBAddress = contractA.resolveAddress("ContractB");
     assert.equal(contractBAddress,  contractB.address);    
@@ -212,11 +202,6 @@ describe('Chain Contract Suite', function() {
   
   
   after(function(done) {
-    
-    /*inf*/console.log(" [sandbox stopping]");
     sandbox.stop(done);
-
-    /*inf*/ var end = new Date().getTime();
-    /*inf*/ time = (end - start)/1000; console.log(" < " + time  + "s >\n");
   });
 });
