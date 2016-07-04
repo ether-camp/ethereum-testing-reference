@@ -14,15 +14,7 @@ contracts.
 
 ![Image of Ethereum testing report](http://i.imgur.com/ZcA3JMT.png)
 
-##  How to run the suite ?  
-```
-git clone https://github.com/ether-camp/ethereum-testing-reference
-cd ethereum-testing-reference
-npm install 
-npm test
-```
-
-##  How to run the suite ?  
+##  How to run the complete suite ?  
 ```
 git clone https://github.com/ether-camp/ethereum-testing-reference
 cd ethereum-testing-reference
