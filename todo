@@ -4,8 +4,12 @@
 [V] Add contract with state changes / constant calls
 [V] Raw transaction
 
+[ ] Add test suite with 2 contracts calling each other (NameReg + Another One)
+ +. NameReg register Wallet under secret wallet
+ +. Wallet -[send value]-> SafeLock
+
 [ ] Structures
 [ ] Events testing
-[ ] Add test suite with 2 contracts calling each other (NameReg + Another One)
+[ ] Modifiers
 
 test

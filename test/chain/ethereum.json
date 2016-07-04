@@ -1,0 +1,83 @@
+{
+  "contracts": "contracts",
+  
+  "env": {
+    "block": {
+      "coinbase" : "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba",
+      "difficulty" : "0x0100",
+      "gasLimit" : 314159200,
+      "gasPrice": 600000000
+    },
+    "accounts": {
+      "0xcd2a3d9f938e13cd947ec05abc7fe734df8dd826": {
+        "name": "fellow-1",
+        "balance": 1000000000000000000000000,
+        "nonce": "1430",
+        "pkey": "cow",
+        "default": true
+      },
+      
+      "0xdedb49385ad5b94a16f236a6890cf9e0b1e30392": {
+        "name": "fellow-2",
+        "balance": 1000000000000000000000000000000000000,
+        "nonce": "0x1cf",
+        "pkey": "0x974f963ee4571e86e5f9bc3b493e453db9c15e5bd19829a4ef9a790de0da0015", 
+        "default": false
+      },
+
+      "0xf6adcaf7bbaa4f88a554c45287e2d1ecb38ac5ff": {
+        "name": "fellow-3",
+        "balance": 1000000000000000000000000000000000000,
+        "nonce": "0x1cf",
+        "pkey": "fellow-3", 
+        "default": false
+      },
+      
+      "0xd0782de398e9eaa3eced0b853b8b2512ffa430e7": {
+        "name": "fellow-4",
+        "balance": 1000000000000000000000000000000000000,
+        "nonce": "0x1cf",
+        "pkey": "fellow-4", 
+        "default": false
+      },
+
+      "0x9c7fa8b011a04e918dfdf6f2c37626b4de04513c": {
+        "name": "fellow-5",
+        "balance": 1000000000000000000000000000000000000,
+        "nonce": "0x1cf",
+        "pkey": "fellow-5", 
+        "default": false
+      },
+
+      "0xa5ba148282334f30d0e7499791ccd5fcaaafe558": {
+        "name": "fellow-6",
+        "balance": 1000000000000000000000000000000000000,
+        "nonce": "0x1cf",
+        "pkey": "fellow-6", 
+        "default": false
+      },
+
+      "0xf58366fc9d73d88b27fbbc35f1efd21232a38ce6": {
+        "name": "fellow-7",
+        "balance": 1000000000000000000000000000000000000,
+        "nonce": "0x1cf",
+        "pkey": "fellow-7", 
+        "default": false
+      },
+      
+      "0x1ee52b26b2362ea0afb42785e0c7f3400fffac0b": {
+        "name": "fellow-8",
+        "balance": 1000000000000000000000000000000000000,
+        "nonce": "0x0",
+        "pkey": "fellow-8", 
+        "default": false
+      },
+
+      "0x0860a8008298322a142c09b528207acb5ab7effc": {
+        "balance": 0,
+        "source": "predeployed/name_reg.sol"
+      }
+      
+    }
+  }
+}
