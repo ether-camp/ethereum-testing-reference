@@ -10,6 +10,7 @@ contracts.
 
 * No Peer end point required
 * Completely based javascript
+* Paralel running 
 * Cool report generated: 
 
 ![Image of Ethereum testing report](http://i.imgur.com/ZcA3JMT.png)
