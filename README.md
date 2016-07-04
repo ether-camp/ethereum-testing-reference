@@ -144,7 +144,7 @@ Check the full example here: [ethereum.json](https://github.com/ether-camp/ether
 
 ```
 
-#### How to add precompiled contract to the sandbox
+#### How to add predepolyed contract to the sandbox
 
 ```json
 "0x0860a8008298322a142c09b528207acb5ab7effc": {
