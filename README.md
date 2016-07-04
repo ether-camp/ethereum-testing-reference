@@ -22,6 +22,24 @@ npm install
 npm test
 ```
 
+##  How to run the suite ?  
+```
+git clone https://github.com/ether-camp/ethereum-testing-reference
+cd ethereum-testing-reference
+npm install 
+npm test
+```
+
+##  How to run the single testcase ?  
+```
+git clone https://github.com/ether-camp/ethereum-testing-reference
+cd ethereum-testing-reference
+npm install
+npm install mocha -g 
+mocha test test/math/math-test.js
+```
+
+
 ##  What test cases included ?  
 
 ### Simple Solidity contract  
