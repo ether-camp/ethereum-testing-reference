@@ -16,7 +16,7 @@ contracts.
 
 ##  How to run the suite ?  
 ```
-git clone https://github.com/ether-camp/test-starter
+git clone https://github.com/ether-camp/ethereum-testing-reference
 cd test-starter
 npm install 
 npm test
