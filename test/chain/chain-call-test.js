@@ -17,15 +17,14 @@ var start = new Date().getTime();
 var log = console.log;
 
 
-describe('ProposalOnVote Contract Suite', function() {
+describe('Chain Contract Suite', function() {
   this.timeout(60000);
   var sandbox = new Sandbox('http://localhost:8554');
   
   
-  /*inf*/ console.log("Compiling ['ContractA.sol'] files");
+  /*inf*/ console.log("Compiling ['ContractA.sol', 'ContractB.sol'] files");
   
-  var compiled = helper.compile('./contract',  ['ContractA.sol']);
-  var proposalText = "Donald Trump For President of United States";
+  var compiled = helper.compile('./contract',  ['ContractA.sol', 'ContractB.sol']);
   
   /*inf*/
       if (compiled.errors){
@@ -51,14 +50,13 @@ describe('ProposalOnVote Contract Suite', function() {
   
   
   /*
-    TestCase: test-deploy 
+    TestCase: test-deploy-a
     Description: 
   */
-  it('test-deploy', function(done) {
-      /*inf*/console.log(" [test-deploy]");
+  it('test-deploy-a', function(done) {
+      /*inf*/console.log(" [test-deploy-a]");
       
-        sandbox.web3.eth.contract(JSON.parse(compiled.contracts['ContractA'].interface)).new(
-        proposalText, 
+        sandbox.web3.eth.contract(JSON.parse(compiled.contracts['ContractA'].interface)).new(         
         {
               
               /* contract creator */ 
@@ -80,6 +78,37 @@ describe('ProposalOnVote Contract Suite', function() {
         });      
       
   });
+  
+  /*
+    TestCase: test-deploy-b
+    Description: 
+  */
+  it('test-deploy-b', function(done) {
+      /*inf*/console.log(" [test-deploy-b]");
+      
+        sandbox.web3.eth.contract(JSON.parse(compiled.contracts['ContractB'].interface)).new(
+        {
+              
+              /* contract creator */ 
+              from: "0xcd2a3d9f938e13cd947ec05abc7fe734df8dd826",
+
+              /* contract bytecode */ 
+              data: '0x' + compiled.contracts['ContractB'].bytecode            
+        }, 
+          
+        function(err, contract) {
+                
+            if (err) {
+                done(err);
+            }
+            else if (contract.address){
+                contractB = contract;
+                done();
+            }            
+        });      
+      
+  });
+  
   
   
   /**
@@ -128,30 +157,60 @@ describe('ProposalOnVote Contract Suite', function() {
     // is hardcoded for that environment    
     var nameReg = sandbox.web3.eth.contract(abi).at("0x0860a8008298322a142c09b528207acb5ab7effc");   
     var addressA = nameReg.addressOf("ContractA");    
+    var addressB = nameReg.addressOf("ContractB");    
     
-    var contractA_ABI = [
-                  {
-                    "constant": true,
-                    "inputs": [],
-                    "name": "getName",
+    
+    // get ContractA with   help from namereg
+    var contractA_ABI = [{
+                    "constant": true, "inputs": [], "name": "getName",
                     "outputs": [
                       {
                         "name": "result",
-                        "type": "address"
+                        "type": "string"
                       }
                     ],
                     "type": "function"
-                  }
-                ];
+                    }];
     
     var contractA_tmp = sandbox.web3.eth.contract(contractA_ABI).at(addressA);
     
-    assert.equal(contractA.getName(), "ContractA");      
+    assert.equal(contractA_tmp.getName(), "ContractA");      
+        
+        
+    // get ContractB with help from namereg
+    var contractB_ABI = [{
+                    "constant": true, "inputs": [], "name": "getName",
+                    "outputs": [
+                      {
+                        "name": "result",
+                        "type": "string"
+                      }
+                    ],
+                    "type": "function"
+                    }];
+    
+    var contractB_tmp = sandbox.web3.eth.contract(contractB_ABI).at(addressB);
+    
+    assert.equal(contractB_tmp.getName(), "ContractB");      
+
+
+    done();
+  });
+  
+  /**
+   * TestCase: contract-call-namereg 
+   * Description: 
+   */
+  it('contract-call-namereg', function(done) {
+    /*inf*/console.log(" [contract-call-namereg]");
+
+    var contractBAddress = contractA.resolveAddress("ContractB");
+    assert.equal(contractBAddress,  contractB.address);    
         
     done();
   });
   
-
+  
   after(function(done) {
     
     /*inf*/console.log(" [sandbox stopping]");
