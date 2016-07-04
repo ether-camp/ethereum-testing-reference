@@ -135,6 +135,7 @@ The perfect test case should look like this:
 
 Check the full example here: [ethereum.json](https://github.com/ether-camp/ethereum-testing-reference/blob/master/test/math/ethereum.json)
 
+#### How to add an account to the sandbox
 ```json
 "0xcd2a3d9f938e13cd947ec05abc7fe734df8dd826": {
   "name": "fellow-1", 
@@ -142,8 +143,17 @@ Check the full example here: [ethereum.json](https://github.com/ether-camp/ether
   "nonce": "1430",
   "pkey": "cow",
   "default": true
-},
+}
 
+```
+
+#### How to add precompiled contract to the sandbox
+
+```json
+"0x0860a8008298322a142c09b528207acb5ab7effc": {
+        "balance": 0,
+        "source": "predeployed/name_reg.sol"
+ }
 ```
 
 
