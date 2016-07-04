@@ -56,8 +56,6 @@ The perfect test case should look like this:
 ```
 
 
-
-
 ```javascript
 
   // Compile the contracts
@@ -67,31 +65,43 @@ The perfect test case should look like this:
   sandbox.start(__dirname + '/ethereum.json', done);
 
   // Deploy the contract transaction 
- 	sandbox.web3.eth.contract(JSON.parse(compiled.contracts['Math'].interface)).new({
-			  
-			  /* contract creator */ 
-			  from: "0xcd2a3d9f938e13cd947ec05abc7fe734df8dd826",
+  sandbox.web3.eth.contract(JSON.parse(compiled.contracts['Math'].interface)).new({
+	  
+	  /* contract creator */ 
+	  from: "0xcd2a3d9f938e13cd947ec05abc7fe734df8dd826",
 
-			  /* contract bytecode */ 
-			  data: '0x' + compiled.contracts['Math'].bytecode			
-		}, 
-		  
-		function(err, contract) {
-				
-			if (err) {
-				done(err);
-			}
-			else if (contract.address){
-		  		math = contract;
-			  	done();
-			}			
-		});	  
+	  /* contract bytecode */ 
+	  data: '0x' + compiled.contracts['Math'].bytecode			
+  }, 
+  
+  function(err, contract) {
+		
+	if (err) {
+		done(err);
+	}
+	else if (contract.address){
+  		math = contract;
+	  	done();
+	}			
+  });	  
 
 ```
 
 
 
+## ethereum.json - sandbox configuration file: 
 
+Check the full example here: [ethereum.json](https://github.com/ether-camp/ethereum-testing-reference/blob/master/test/math/ethereum.json)
 
+```json
+"0xcd2a3d9f938e13cd947ec05abc7fe734df8dd826": {
+  "name": "fellow-1", 
+  "balance": 1000000000000000000000000,
+  "nonce": "1430",
+  "pkey": "cow",
+  "default": true
+},
+
+```
 
 
