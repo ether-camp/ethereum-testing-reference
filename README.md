@@ -23,7 +23,7 @@ the json file to configure the sandbox
 to run it: 
 ```
 
-![Testing structure](http://i.imgur.com/CqpKv8S.png)
+![Testing structure](http://i.imgur.com/cmp83Wb.png)
 
 
 ##  How to run the complete suite ?  
