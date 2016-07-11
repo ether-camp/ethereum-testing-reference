@@ -15,6 +15,17 @@ contracts.
 
 ![Image of Ethereum testing report](http://i.imgur.com/ZcA3JMT.png)
 
+##  Testing Structure: 
+```
+To define a test in that suite paradigm 
+all you need is the test case file and 
+the json file to configure the sandbox
+to run it: 
+```
+
+![Testing structure](http://i.imgur.com/CqpKv8S.png)
+
+
 ##  How to run the complete suite ?  
 ```
 git clone https://github.com/ether-camp/ethereum-testing-reference
