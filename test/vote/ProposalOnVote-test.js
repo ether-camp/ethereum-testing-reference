@@ -71,7 +71,7 @@ describe('ProposalOnVote Contract Suite', function() {
     Description: assert that the initiation value of 
                  proposal text worked as expected
   */
-  it('check-init', function(done) {
+  it('check-init', function() {
     log(" [check-init]");
 
     /* Constant call no transaction required */    
@@ -338,8 +338,8 @@ describe('ProposalOnVote Contract Suite', function() {
     TestCase: check-accepted-result 
     Description: Check the result of the proposal
   */
-  it('check-accepted-result', function(done) {
-    log(" check-accepted-result]");
+  it('check-accepted-result', function() {
+    log(" [check-accepted-result]");
 
     var vNo = proposal.getVotedNo();
     var vYes = proposal.getVotedYes();
