@@ -21,10 +21,14 @@ To define a test in that suite paradigm
 all you need is the test case file and 
 the json file to configure the sandbox
 to run it: 
+
+[test-folder]
+  |-- .
+  |-- math-test.js
+  |-- ethereum.json
+
+
 ```
-
-![Testing structure](http://i.imgur.com/cmp83Wb.png)
-
 
 ##  How to run the complete suite ?  
 ```
