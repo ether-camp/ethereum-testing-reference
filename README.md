@@ -199,12 +199,13 @@ Ask ether.camp slack.
 
 OS Name | Version
 ------------ | -------------
- Ubuntu | 15+
+ Ubuntu | 14.04+
  Fedora | 24
- CentOS | ???
+ CentOS | 7
  Max    | El Capitan, 10.11.5 
  Windows | (Not supported Yet) :grin:
 
+*. node.js ver >= 4
 
 
 ## More ? 
