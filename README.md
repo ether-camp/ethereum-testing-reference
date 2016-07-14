@@ -192,7 +192,7 @@ good bitcoins promised for help.
 
 Ask ether.camp slack.
 ```
-[Go to Slack](www.ether.camp)
+[Go to Slack](http://www.ether.camp)
 
 
 ## Tested OS: 
@@ -210,4 +210,4 @@ OS Name | Version
 
 ## More ? 
 
-Ping us on  [Slack](www.ether.camp)
+Ping us on  [Slack](http://www.ether.camp)
