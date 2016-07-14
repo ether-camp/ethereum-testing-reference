@@ -13,7 +13,7 @@ contracts.
 * Completely based javascript
 * Paralel running 
 * Cool report generated: 
-* Running smooth on this OS list.
+* Running smooth on this [OS list](#tested-os).
 
 ![Image of Ethereum testing report](http://i.imgur.com/ZcA3JMT.png)
 
