@@ -49,17 +49,18 @@ npm install mocha -g
 mocha test test/math/math-test.js
 ```
 
-#### Can I run it on Travis ? 
+## Can I run it on Travis ? 
 
 ```
 yes you can and obviously on any 
 continius integration system.
 here is demo sample, just for 
 that subject: 
+```
 
 https://github.com/ether-camp/ethereum-test-travis
 
-```
+
 
 
 ##  What test cases included ?  
@@ -183,7 +184,7 @@ Check the full example here: [ethereum.json](https://github.com/ether-camp/ether
 ```
 
 
-#### Want to help ? 
+## Want to help ? 
 ```
 We are looking for people who wants to 
 add testcases demonstrating best practice, 
@@ -194,7 +195,7 @@ Ask ether.camp slack.
 [Go to Slack](www.ether.camp)
 
 
-#### Tested OS: 
+## Tested OS: 
 
 OS Name | Version
 ------------ | -------------
@@ -206,6 +207,6 @@ OS Name | Version
 
 
 
-#### More ? 
+## More ? 
 
 Ping us on  [Slack](www.ether.camp)
