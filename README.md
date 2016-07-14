@@ -49,6 +49,18 @@ npm install mocha -g
 mocha test test/math/math-test.js
 ```
 
+#### Can I run it on Travis ? 
+
+```
+yes you can and obviously on any 
+continius integration system.
+here is demo sample, just for 
+that subject: 
+
+https://github.com/ether-camp/ethereum-test-travis
+
+```
+
 
 ##  What test cases included ?  
 
