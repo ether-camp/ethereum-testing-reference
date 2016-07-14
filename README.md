@@ -9,9 +9,11 @@ contracts.
 ##  Why it is cool ? 
 
 * No Peer end point required
+* Start Testing in 3 seconds.
 * Completely based javascript
 * Paralel running 
 * Cool report generated: 
+* Running smooth on this OS list.
 
 ![Image of Ethereum testing report](http://i.imgur.com/ZcA3JMT.png)
 
@@ -169,3 +171,29 @@ Check the full example here: [ethereum.json](https://github.com/ether-camp/ether
 ```
 
 
+#### Want to help ? 
+```
+We are looking for people who wants to 
+add testcases demonstrating best practice, 
+good bitcoins promised for help.
+
+Ask ether.camp slack.
+```
+[Go to Slack](www.ether.camp)
+
+
+#### Tested OS: 
+
+OS Name | Version
+------------ | -------------
+ Ubuntu | 15+
+ Fedora | 24
+ CentOS | ???
+ Max    | El Capitan, 10.11.5 
+ Windows | (Not supported Yet) :grin:
+
+
+
+#### More ? 
+
+Ping us on  [Slack](www.ether.camp)
