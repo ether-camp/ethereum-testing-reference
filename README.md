@@ -63,7 +63,7 @@ https://github.com/ether-camp/ethereum-test-travis
 
 
 
-##  What test cases included ?  
+##  What test cases are included ?  
 
 ### Simple Solidity contract  
 [math-test.js](https://github.com/ether-camp/ethereum-testing-reference/blob/master/test/math/math-test.js)
