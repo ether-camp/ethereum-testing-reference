@@ -91,6 +91,14 @@ The simple voting system:
   }
 ```
 
+[MultiSig-test.js](https://github.com/ether-camp/ethereum-testing-reference/blob/master/test/vote/MultiSig-test.js)
+```
+This is a MultiSig wallet contract, similar to the one mist uses. 
+The only difference is that on MultiSig transactions requiring multiple confirmations, 
+the requests can arrive on different blocks. 
+This test case also demonstrates how to test events.
+```
+
 ### Inter contract communication
 
 [chain-call-test.js](https://github.com/ether-camp/ethereum-testing-reference/blob/master/test/chain/chain-call-test.js)
