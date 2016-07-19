@@ -9,9 +9,11 @@ contracts.
 ##  Why it is cool ? 
 
 * No Peer end point required
+* Start Testing in 3 seconds.
 * Completely based javascript
 * Paralel running 
 * Cool report generated: 
+* Running smooth on this [OS list](#tested-os).
 
 ![Image of Ethereum testing report](http://i.imgur.com/ZcA3JMT.png)
 
@@ -21,10 +23,14 @@ To define a test in that suite paradigm
 all you need is the test case file and 
 the json file to configure the sandbox
 to run it: 
+
+[test-folder]
+  |-- .
+  |-- math-test.js
+  |-- ethereum.json
+
+
 ```
-
-![Testing structure](http://i.imgur.com/cmp83Wb.png)
-
 
 ##  How to run the complete suite ?  
 ```
@@ -43,8 +49,21 @@ npm install mocha -g
 mocha test test/math/math-test.js
 ```
 
+## Can I run it on Travis ? 
 
-##  What test cases included ?  
+```
+yes you can and obviously on any 
+continius integration system.
+here is demo sample, just for 
+that subject: 
+```
+
+https://github.com/ether-camp/ethereum-test-travis
+
+
+
+
+##  What test cases are included ?  
 
 ### Simple Solidity contract  
 [math-test.js](https://github.com/ether-camp/ethereum-testing-reference/blob/master/test/math/math-test.js)
@@ -165,3 +184,30 @@ Check the full example here: [ethereum.json](https://github.com/ether-camp/ether
 ```
 
 
+## Want to help ? 
+```
+We are looking for people who wants to 
+add testcases demonstrating best practice, 
+good bitcoins promised for help.
+
+Ask ether.camp slack.
+```
+[Go to Slack](http://www.ether.camp)
+
+
+## Tested OS: 
+
+OS Name | Version
+------------ | -------------
+ Ubuntu | 14.04+
+ Fedora | 24
+ CentOS | 7
+ Max    | El Capitan, 10.11.5 
+ Windows | (Not supported Yet) :grin:
+
+*. node.js ver >= 4
+
+
+## More ? 
+
+Ping us on  [Slack](http://www.ether.camp)
