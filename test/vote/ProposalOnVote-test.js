@@ -1,25 +1,20 @@
 /*
  * Testing for ${home}/contract/ProposalOnVote.sol
  */
-var _ = require('lodash');
 var assert = require('assert');
 
 var Sandbox = require('ethereum-sandbox-client');
 var helper = require('ethereum-sandbox-helper');
 
-var ethTx = require('ethereumjs-tx');
-
 var async = require('async');
-var start = new Date().getTime();
-
-var log = console.log;
 
 describe('ProposalOnVote Contract Suite', function() {
   this.timeout(60000);
+  
   var sandbox = new Sandbox('http://localhost:8554');
 
   var compiled = helper.compile('./contract', ['ProposalOnVote.sol']);
-  var proposalText = "Donald Trump For President of United States";
+  var proposalText = 'Donald Trump For President of United States';
   var proposal;
 
   before(function(done) {
@@ -35,31 +30,26 @@ describe('ProposalOnVote Contract Suite', function() {
      test cases.
   */
   it('test-deploy', function(done) {
-      log(" [test-deploy]");
+    console.log(' [test-deploy]');
 
-        sandbox.web3.eth.contract(JSON.parse(compiled.contracts['ProposalOnVote'].interface)).new(
-        proposalText,
-        {
-              /* contract creator */
-              from: "0xcd2a3d9f938e13cd947ec05abc7fe734df8dd826",
+    sandbox.web3.eth.contract(JSON.parse(compiled.contracts['ProposalOnVote'].interface)).new(
+      proposalText,
+      {
+        /* contract creator */
+        from: '0xcd2a3d9f938e13cd947ec05abc7fe734df8dd826',
 
-              /* contract bytecode */
-              data: '0x' + compiled.contracts['ProposalOnVote'].bytecode
-        },
-
-        function(err, contract) {
-
-            if (err) {
-                done(err);
-            }
-            else if (contract.address){
-                proposal = contract;
-                done();
-            }
-        });
-
+        /* contract bytecode */
+        data: '0x' + compiled.contracts['ProposalOnVote'].bytecode
+      },
+      function(err, contract) {
+        if (err) done(err);
+        else if (contract.address){
+          proposal = contract;
+          done();
+        }
+      }
+    );
   });
-
 
   /*
     TestCase: check-init
@@ -67,11 +57,11 @@ describe('ProposalOnVote Contract Suite', function() {
                  proposal text worked as expected
   */
   it('check-init', function() {
-    log(" [check-init]");
+    console.log(' [check-init]');
 
     /* Constant call no transaction required */
-    var recivedText = proposal.getProposalText();
-    assert(recivedText, proposalText);
+    var receivedText = proposal.getProposalText();
+    assert(receivedText, proposalText);
   });
 
   /*
@@ -79,11 +69,10 @@ describe('ProposalOnVote Contract Suite', function() {
     Description:
   */
   it('check-vote-yes', function(done) {
-    log(" [check-vote-yes]");
+    console.log(' [check-vote-yes]');
 
     proposal.voteYes({
-      from: "0xdedb49385ad5b94a16f236a6890cf9e0b1e30392",
-      value: sandbox.web3.toWei(1, 'ether')
+      from: '0xdedb49385ad5b94a16f236a6890cf9e0b1e30392'
     }, function(err, txHash) {
       if (err) return done(err);
 
@@ -109,12 +98,11 @@ describe('ProposalOnVote Contract Suite', function() {
                  the vote will not be counted.
   */
   it('check-vote-yes-in-loop-same-address', function(done) {
-    log(" [check-vote-yes-in-loop-same-address]");
+    console.log(' [check-vote-yes-in-loop-same-address]');
 
     async.times(20, function(n, next) {
       proposal.voteYes({
-        from: "0xdedb49385ad5b94a16f236a6890cf9e0b1e30392",
-        value: sandbox.web3.toWei(1, 'ether')
+        from: '0xdedb49385ad5b94a16f236a6890cf9e0b1e30392'
       }, function(err, txHash) {
         if (err) return next(err);
         // we are waiting for blockchain to accept the transaction
@@ -139,20 +127,19 @@ describe('ProposalOnVote Contract Suite', function() {
                  different address.
   */
   it('check-vote-no-in-loop-5-addresses', function(done) {
-    log(" [check-vote-no-in-loop-5-addresses]");
+    console.log(' [check-vote-no-in-loop-5-addresses]');
 
     var voters = [
-      "0xf6adcaf7bbaa4f88a554c45287e2d1ecb38ac5ff",
-      "0xd0782de398e9eaa3eced0b853b8b2512ffa430e7",
-      "0x9c7fa8b011a04e918dfdf6f2c37626b4de04513c",
-      "0xa5ba148282334f30d0e7499791ccd5fcaaafe558",
-      "0xf58366fc9d73d88b27fbbc35f1efd21232a38ce6"
+      '0xf6adcaf7bbaa4f88a554c45287e2d1ecb38ac5ff',
+      '0xd0782de398e9eaa3eced0b853b8b2512ffa430e7',
+      '0x9c7fa8b011a04e918dfdf6f2c37626b4de04513c',
+      '0xa5ba148282334f30d0e7499791ccd5fcaaafe558',
+      '0xf58366fc9d73d88b27fbbc35f1efd21232a38ce6'
     ];
 
     async.each(voters, function(voter, next){
       proposal.voteNo({
-        from: voter,
-        value: sandbox.web3.toWei(1, 'ether')
+        from: voter
       }, function(err, txHash) {
         if (err) return next(err);
         // we are waiting for blockchain to accept the transaction
@@ -179,11 +166,10 @@ describe('ProposalOnVote Contract Suite', function() {
                  with not authorized address.
   */
   it('finish-the-vote-not-owner', function(done) {
-    log(" [finish-the-vote-not-owner]");
+    console.log(' [finish-the-vote-not-owner]');
 
     proposal.finishTheVote({
-      from: "0xdedb49385ad5b94a16f236a6890cf9e0b1e30392",
-      value: sandbox.web3.toWei(1, 'ether')
+      from: '0xdedb49385ad5b94a16f236a6890cf9e0b1e30392'
     }, function(err, txHash) {
       if (err) return done(err);
 
@@ -205,11 +191,10 @@ describe('ProposalOnVote Contract Suite', function() {
     Description: Finish the voting process correctly
   */
   it('finish-the-vote', function(done) {
-    log(" [finish-the-vote]");
+    console.log(' [finish-the-vote]');
 
     proposal.finishTheVote({
-      from: "0xcd2a3d9f938e13cd947ec05abc7fe734df8dd826",
-      value: sandbox.web3.toWei(1, 'ether')
+      from: '0xcd2a3d9f938e13cd947ec05abc7fe734df8dd826'
     }, function(err, txHash) {
       if (err) return done(err);
 
@@ -232,11 +217,10 @@ describe('ProposalOnVote Contract Suite', function() {
                  voting process was done.
   */
   it('check-vote-after-finish', function(done) {
-    log(" [check-vote-after-finish]");
+    console.log(' [check-vote-after-finish]');
 
     proposal.voteYes({
-      from: "0x1ee52b26b2362ea0afb42785e0c7f3400fffac0b",
-      value: sandbox.web3.toWei(1, 'ether')
+      from: '0x1ee52b26b2362ea0afb42785e0c7f3400fffac0b'
     }, function(err, txHash) {
       if (err) return done(err);
 
@@ -260,11 +244,11 @@ describe('ProposalOnVote Contract Suite', function() {
     Description: Check the result of the proposal
   */
   it('check-accepted-result', function() {
-    log(" [check-accepted-result]");
+    console.log(' [check-accepted-result]');
 
     // Constant call no transaction required
     var acceptResult = proposal.isAccepted();
-    assert.equal(acceptResult, "REJECTED");
+    assert.equal(acceptResult, 'REJECTED');
   });
 
   after(function(done) {

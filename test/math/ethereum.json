@@ -1,6 +1,6 @@
 {
   "contracts": "contracts",
-  
+
   "env": {
     "block": {
       "coinbase" : "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba",
@@ -20,7 +20,7 @@
         "name": "fellow-2",
         "balance": 1000000000000000000,
         "nonce": "0x1cf",
-        "pkey": "0x974f963ee4571e86e5f9bc3b493e453db9c15e5bd19829a4ef9a790de0da0015", 
+        "pkey": "0x974f963ee4571e86e5f9bc3b493e453db9c15e5bd19829a4ef9a790de0da0015",
         "default": false
       }
     }

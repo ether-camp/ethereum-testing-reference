@@ -15,7 +15,7 @@ contract ProposalOnVote{
   // save already voted
   
   function ProposalOnVote(string text){
-	owner = msg.sender;
+    owner = msg.sender;
     proposalText = text;
   }
   
@@ -35,7 +35,7 @@ contract ProposalOnVote{
     if (voted[msg.sender]) throw;
 
     voted[msg.sender] = true;
-	++votedYes;  
+    ++votedYes;  
   }
   
 
@@ -48,7 +48,7 @@ contract ProposalOnVote{
     if (voted[msg.sender]) throw;
 
     voted[msg.sender] = true;
-	++votedNo;  
+    ++votedNo;  
   }
   
   

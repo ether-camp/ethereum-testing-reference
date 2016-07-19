@@ -7,13 +7,9 @@
     "async": "^2.0.0-rc.5",
     "ethereum-sandbox-client": "^1.0.0-beta3",
     "ethereum-sandbox-helper": "^1.0.0-beta1",
-    "lodash": "^4.13.1",
     "mocha": "^2.5.3",
-    "mochawesome": "1.3.0", 
+    "mochawesome": "1.3.0",
     "solc": "^0.3.4",
-    
-	"web3": "^0.17.0-alpha",	
-	"ethereumjs-tx": "^1.0.0",
-    "ethereumjs-util": "^4.0.0"
+    "web3": "^0.17.0-alpha"
   }
 }
