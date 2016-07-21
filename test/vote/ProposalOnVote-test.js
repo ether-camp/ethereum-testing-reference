@@ -61,7 +61,7 @@ describe('ProposalOnVote Contract Suite', function() {
 
     /* Constant call no transaction required */
     var receivedText = proposal.getProposalText();
-    assert(receivedText, proposalText);
+    assert.equal(receivedText, proposalText);
   });
 
   /*
