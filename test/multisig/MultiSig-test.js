@@ -1,18 +1,12 @@
 /*
  * Testing for ${home}/contract/MultiSig.sol
  */
-var _ = require('lodash');
 var assert = require('assert');
 
 var Sandbox = require('ethereum-sandbox-client');
 var helper = require('ethereum-sandbox-helper');
 
-var SolidityFunction = require('web3/lib/web3/function');
 var SolidityEvent = require("web3/lib/web3/event.js");
-var ethTx = require('ethereumjs-tx');
-
-var async = require('async');
-var start = new Date().getTime();
 
 var log = console.log;
 
@@ -33,11 +27,6 @@ describe('MultiSig Contract Suite', function() {
   var required = 2;
   var wallet;
  
-  
-  before(function(done) {
-    sandbox.start(__dirname + '/ethereum.json', done);
-  });
-  
   function parseEvent(eventLog) {
     var parsed;
     var topics = eventLog.topics;
@@ -54,6 +43,10 @@ describe('MultiSig Contract Suite', function() {
     return parsed;
   }
   
+  before(function(done) {
+    sandbox.start(__dirname + '/ethereum.json', done);
+  });
+ 
   /*
     TestCase: test-deploy 
     Description: deploying the contract, 
@@ -70,25 +63,21 @@ describe('MultiSig Contract Suite', function() {
     required,
     dayLimit,
     {
-          
-          /* contract creator */ 
-          from: creator,
+      /* contract creator */ 
+      from: creator,
 
-          /* contract bytecode */ 
-          data: '0x' + compiled.contracts[contractName].bytecode            
+      /* contract bytecode */ 
+      data: '0x' + compiled.contracts[contractName].bytecode            
     }, 
-      
     function(err, contract) {
-            
-        if (err) {
-            done(err);
-        }
-        else if (contract.address){
-            wallet = contract;
-            done();
-        }            
+      if (err) {
+        done(err);
+      }
+      else if (contract.address){
+        wallet = contract;
+        done();
+      }            
     });      
-    
   });
   
   
