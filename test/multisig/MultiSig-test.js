@@ -6,10 +6,7 @@ var assert = require('assert');
 var Sandbox = require('ethereum-sandbox-client');
 var helper = require('ethereum-sandbox-helper');
 
-var SolidityEvent = require("web3/lib/web3/event.js");
-
 var log = console.log;
-
 
 describe('MultiSig Contract Suite', function() {
   this.timeout(60000);
@@ -26,22 +23,6 @@ describe('MultiSig Contract Suite', function() {
   ];
   var required = 2;
   var wallet;
- 
-  function parseEvent(eventLog) {
-    var parsed;
-    var topics = eventLog.topics;
-    wallet.abi
-      .filter(function (abiEntry) {
-        return abiEntry.type == 'event';
-      })
-      .find(function (abiEntry) {
-        var solidityEvent = new SolidityEvent(null, abiEntry, null);
-        if (solidityEvent.signature() == topics[0].replace('0x', '')) {
-          parsed = solidityEvent.decode(eventLog);
-        }
-    });
-    return parsed;
-  }
   
   before(function(done) {
     sandbox.start(__dirname + '/ethereum.json', done);
@@ -119,7 +100,7 @@ describe('MultiSig Contract Suite', function() {
         if (receipt.logs.length !== 1) return done('Should have been one log');
 
         var eventLog = receipt.logs[0];
-        var parsed = parseEvent(eventLog);
+        var parsed = helper.parseEventLog(wallet.abi, eventLog);
         try {
           assert(sandbox.web3.eth.getBalance(wallet.address).equals(sandbox.web3.toWei(1, 'ether')));
           assert.equal(parsed.event, 'Deposit');
@@ -157,7 +138,7 @@ describe('MultiSig Contract Suite', function() {
         if (!receipt.logs) return done('No logs in receipt');
         if (receipt.logs.length !== 1) return done('Should have been one log');
         var eventLog = receipt.logs[0];
-        var parsed = parseEvent(eventLog);
+        var parsed = helper.parseEventLog(wallet.abi, eventLog);
         try {
           assert.equal(parsed.event, 'SingleTransact');
           assert(sandbox.web3.eth.getBalance(wallet.address).equals(sandbox.web3.toWei(0.6, 'ether')));
@@ -179,7 +160,6 @@ describe('MultiSig Contract Suite', function() {
                  event ConfirmationNeeded should be
                  emitted
   */
-  var confirmationNeededBlock;
   it('test-confirmation-needed', function(done) {
     log(" [test-confirmation-needed]");
     
@@ -198,9 +178,8 @@ describe('MultiSig Contract Suite', function() {
         if (err) return done(err);
         if (!receipt.logs) return done('No logs in receipt');
         if (receipt.logs.length !== 2) return done('Should have been two logs');
-        var confirmedEventLog = parseEvent(receipt.logs[0]);
-        confirmationNeededBlock = confirmedEventLog.blockNumber;
-        var confirmationNeededEventLog = parseEvent(receipt.logs[1]);
+        var confirmedEventLog = helper.parseEventLog(wallet.abi, receipt.logs[0]);
+        var confirmationNeededEventLog = helper.parseEventLog(wallet.abi, receipt.logs[1]);
         try {
           assert.equal(confirmedEventLog.event, 'Confirmation');
           assert.equal(confirmationNeededEventLog.event, 'ConfirmationNeeded');
@@ -242,8 +221,8 @@ describe('MultiSig Contract Suite', function() {
         if (err) return done(err);
         if (!receipt.logs) return done('No logs in receipt');
         if (receipt.logs.length !== 2) return done('Should have been two logs');
-        var confirmedEventLog = parseEvent(receipt.logs[0]);
-        var multiTransactEventLog = parseEvent(receipt.logs[1]);
+        var confirmedEventLog = helper.parseEventLog(wallet.abi, receipt.logs[0]);
+        var multiTransactEventLog = helper.parseEventLog(wallet.abi, receipt.logs[1]);
         try {
           assert.equal(confirmedEventLog.event, 'Confirmation');
           assert.equal(multiTransactEventLog.event, 'MultiTransact');

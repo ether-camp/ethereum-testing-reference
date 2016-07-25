@@ -6,7 +6,7 @@
   "dependencies": {
     "async": "^2.0.0-rc.5",
     "ethereum-sandbox-client": "^1.0.0-beta3",
-    "ethereum-sandbox-helper": "^1.0.0-beta1",
+    "ethereum-sandbox-helper": "^1.0.0-beta2",
     "mocha": "^2.5.3",
     "mochawesome": "1.3.0",
     "solc": "^0.3.4",
