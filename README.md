@@ -65,6 +65,20 @@ https://github.com/ether-camp/ethereum-test-travis
 
 ##  What test cases are included ?  
 
+### Few lines of code to get started
+[simple-test.js](https://github.com/ether-camp/ethereum-testing-reference/blob/master/test/simple/simple-test.js)
+* Place `Math.sol` in directory `contract`
+* Test it using this code:
+```
+var Workbench = require('ethereum-sandbox-workbench');
+var workbench = new Workbench();
+workbench.startTesting('Math', function(contracts) {
+  it('sum-test', function(done) {
+    ...
+  });
+});
+```
+
 ### Simple Solidity contract  
 [math-test.js](https://github.com/ether-camp/ethereum-testing-reference/blob/master/test/math/math-test.js)
 ```
