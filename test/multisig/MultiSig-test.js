@@ -141,6 +141,8 @@ workbench.startTesting('MultiSig', function(contracts) {
                  event ConfirmationNeeded should be
                  emitted
   */
+
+  var confirmationNeededHash;
   it('test-confirmation-needed', function(done) {
     log(" [test-confirmation-needed]");
     
@@ -168,6 +170,7 @@ workbench.startTesting('MultiSig', function(contracts) {
         assert(confirmationNeededEventLog.args.value.equals(sandbox.web3.toWei(0.5, 'ether')));
         assert.equal(confirmationNeededEventLog.args.initiator, '0xcd2a3d9f938e13cd947ec05abc7fe734df8dd826');
         assert.equal(confirmationNeededEventLog.args.to, '0xdedb49385ad5b94a16f236a6890cf9e0b1e30392');
+        confirmationNeededHash = confirmationNeededEventLog.args.operation;
     })
     .then(done)
     .catch(done);    
@@ -181,12 +184,14 @@ workbench.startTesting('MultiSig', function(contracts) {
   */
   it('test-multi-transact', function(done) {
     log(" [test-multi-transact]");
+
+    if (!confirmationNeededHash) {
+      return done(new Error('Can\'t test multi transact without a confirmationNeededHash'));
+    }
     
     var initialAddressBalance = sandbox.web3.eth.getBalance('0xdedb49385ad5b94a16f236a6890cf9e0b1e30392');
-    wallet.execute(
-      '0xdedb49385ad5b94a16f236a6890cf9e0b1e30392', 
-      sandbox.web3.toWei(0.5, 'ether'),
-      null, {
+    wallet.confirm(
+      confirmationNeededHash, {
       from: '0xf6adcaf7bbaa4f88a554c45287e2d1ecb38ac5ff',
       gas: 500000
     })

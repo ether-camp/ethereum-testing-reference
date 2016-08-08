@@ -344,7 +344,7 @@ contract Wallet is multisig, multiowned, daylimit {
             return 0;
         }
         // determine our operation hash.
-        _r = sha3(msg.data);
+        _r = sha3(msg.data, block.number);
         if (!confirm(_r) && m_txs[_r].to == 0) {
             m_txs[_r].to = _to;
             m_txs[_r].value = _value;
