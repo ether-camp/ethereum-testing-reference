@@ -1,5 +1,5 @@
 {
- "contracts":"contracts", 
+ "contracts":"contracts",
 
  "env":{"block":{"coinbase":"0xcd2a3d9f938e13cd947ec05abc7fe734df8dd826","difficulty":"0x0100","gasLimit":314159200,"gasPrice":600000000},
  
