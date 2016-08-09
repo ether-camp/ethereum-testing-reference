@@ -28,21 +28,19 @@ workbench.startTesting('MultiSig', function(contracts) {
      contract call testing in the following 
      test cases
   */
-  it('test-deploy', function(done) {
+  it('test-deploy', function() {
     dayLimit = sandbox.web3.toWei(0.7, 'ether');
     log(" [test-deploy]");
-    contracts.Wallet.new(owners, required, dayLimit, {
+    return contracts.Wallet.new(owners, required, dayLimit, {
       from: creator
     })
     .then(function(contract) {
       if (contract.address){
         wallet = contract;
-        done();
       } else {
-        done(new Error('No contract address'));
+        throw new Error('No contract address');
       }        
-    })      
-    .catch(done);
+    });
   });
   
   
@@ -51,10 +49,10 @@ workbench.startTesting('MultiSig', function(contracts) {
     Description: assert that the initialized owners of 
                  the wallet worked as expected
   */
-  it('check-init', function(done) {
+  it('check-init', function() {
     log(" [check-init]");
 
-    wallet.m_required.call()
+    return wallet.m_required.call()
     .then(function (requiredFromContract) {
       assert(requiredFromContract.equals(required));
       return wallet.m_numOwners.call();
@@ -62,20 +60,17 @@ workbench.startTesting('MultiSig', function(contracts) {
     .then(function (numOwnersFromContract) {
       /* m_numOwners is the pointer to the next owner slot */
       assert(numOwnersFromContract.equals(owners.length + 1));
-    })
-    .then(done)
-    .catch(done);
-
+    });
   });
   
   /*
     TestCase: test-deposit
     Description: 
   */
-  it('test-deposit', function(done) {
+  it('test-deposit', function() {
     log(" [test-deposit]");
     
-    workbench.sendTransaction({
+    return workbench.sendTransaction({
       from: '0xdedb49385ad5b94a16f236a6890cf9e0b1e30392',
       to: wallet.address,
       gas: 200000,
@@ -94,9 +89,7 @@ workbench.startTesting('MultiSig', function(contracts) {
       assert.equal(parsed.event, 'Deposit');
       assert.equal(parsed.args._from, '0xdedb49385ad5b94a16f236a6890cf9e0b1e30392');
       assert(parsed.args.value.equals(sandbox.web3.toWei(1, 'ether')));
-    })
-    .then(done)
-    .catch(done);
+    });
   });
  
   /*
@@ -104,11 +97,11 @@ workbench.startTesting('MultiSig', function(contracts) {
     Description: Tests if sending below daily limit executes
                  immediately.
   */
-  it('test-send-below-daily-limit', function(done) {
+  it('test-send-below-daily-limit', function() {
     log(" [test-send-below-daily-limit]");
     
     var initialAddressBalance = sandbox.web3.eth.getBalance('0xdedb49385ad5b94a16f236a6890cf9e0b1e30392');
-    wallet.execute(
+    return wallet.execute(
       '0xdedb49385ad5b94a16f236a6890cf9e0b1e30392', 
       sandbox.web3.toWei(0.4, 'ether'),
       null, {
@@ -130,9 +123,7 @@ workbench.startTesting('MultiSig', function(contracts) {
         assert(parsed.args.value.equals(sandbox.web3.toWei(0.4, 'ether')));
         assert.equal(parsed.args.owner, '0xcd2a3d9f938e13cd947ec05abc7fe734df8dd826');
         assert.equal(parsed.args.to, '0xdedb49385ad5b94a16f236a6890cf9e0b1e30392');
-    })
-    .then(done)
-    .catch(done);    
+    });
   });
     
   /*
@@ -143,11 +134,11 @@ workbench.startTesting('MultiSig', function(contracts) {
   */
 
   var confirmationNeededHash;
-  it('test-confirmation-needed', function(done) {
+  it('test-confirmation-needed', function() {
     log(" [test-confirmation-needed]");
     
     var initialAddressBalance = sandbox.web3.eth.getBalance('0xdedb49385ad5b94a16f236a6890cf9e0b1e30392');
-    wallet.execute(
+    return wallet.execute(
       '0xdedb49385ad5b94a16f236a6890cf9e0b1e30392', 
       sandbox.web3.toWei(0.5, 'ether'),
       null, {
@@ -171,9 +162,7 @@ workbench.startTesting('MultiSig', function(contracts) {
         assert.equal(confirmationNeededEventLog.args.initiator, '0xcd2a3d9f938e13cd947ec05abc7fe734df8dd826');
         assert.equal(confirmationNeededEventLog.args.to, '0xdedb49385ad5b94a16f236a6890cf9e0b1e30392');
         confirmationNeededHash = confirmationNeededEventLog.args.operation;
-    })
-    .then(done)
-    .catch(done);    
+    });
   });
 
 
@@ -182,15 +171,15 @@ workbench.startTesting('MultiSig', function(contracts) {
     Description: confirm using another address
                  and notice the values chance.
   */
-  it('test-multi-transact', function(done) {
+  it('test-multi-transact', function() {
     log(" [test-multi-transact]");
 
     if (!confirmationNeededHash) {
-      return done(new Error('Can\'t test multi transact without a confirmationNeededHash'));
+      return Promise.reject(new Error('Can\'t test multi transact without a confirmationNeededHash'));
     }
     
     var initialAddressBalance = sandbox.web3.eth.getBalance('0xdedb49385ad5b94a16f236a6890cf9e0b1e30392');
-    wallet.confirm(
+    return wallet.confirm(
       confirmationNeededHash, {
       from: '0xf6adcaf7bbaa4f88a554c45287e2d1ecb38ac5ff',
       gas: 500000
@@ -211,9 +200,6 @@ workbench.startTesting('MultiSig', function(contracts) {
         assert.equal(multiTransactEventLog.args.owner, '0xf6adcaf7bbaa4f88a554c45287e2d1ecb38ac5ff');
         assert(multiTransactEventLog.args.value.equals(sandbox.web3.toWei(0.5, 'ether')));
         assert.equal(multiTransactEventLog.args.to, '0xdedb49385ad5b94a16f236a6890cf9e0b1e30392');
-    })
-    .then(done)
-    .catch(done);    
-   
+    });
   });
 });
