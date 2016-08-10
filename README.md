@@ -73,7 +73,7 @@ https://github.com/ether-camp/ethereum-test-travis
 var Workbench = require('ethereum-sandbox-workbench');
 var workbench = new Workbench();
 workbench.startTesting('Math', function(contracts) {
-  it('sum-test', function(done) {
+  it('sum-test', function() {
     ...
   });
 });
@@ -205,7 +205,156 @@ Check the full example here: [ethereum.json](https://github.com/ether-camp/ether
  }
 ```
 
+### Workbench
+#### Configuration
+When starting the workbench, it supports the following configuration object:
+```
+var Workbench = require('ethereum-sandbox-workbench');
+var workbench = new Workbench({
+  defaults: {                   //defaults object passed to ether-pudding
+    from: '0x'                  //i.e., default from address for contract transactions
+  },
+  contractsDirectory: '',       //the directory in which the .sol files are stored
+  ethereumJsonPath: '',         //if not exists, the generated ethereum.json will be stored here
+  initialState: {}              //possible to specify ethereum.json state here instead of in the file
+});
+```
 
+#### Mocking
+The workbench has a mocking framework. It creates a proxy contract that has the same interface but the responses are tailored to your choosing.
+
+##### Mock call return value
+1. Create a new proxy using `newMock`.
+2. Use `mockCallReturnValue` with the wanted return value on the mocked function.
+
+```
+var Workbench = require('ethereum-sandbox-workbench');
+var workbench = new Workbench({
+  defaults: {
+    from: '0xcd2a3d9f938e13cd947ec05abc7fe734df8dd826'
+  }
+});
+workbench.startTesting('GoldPrice', function(contracts) {
+  it('tests-mock', function() {
+    return contracts.GoldPrice.newMock()
+    .then(function(contract) {
+      return mockContract.price.mockCallReturnValue(299);
+    })
+    .then(function(receipt) {
+      return mockContract.price.call();
+    })
+    .then(function(value) {
+      assert(value.equals(299));
+    });
+  });
+});
+```
+
+##### Mock transaction response
+1. Create a new proxy using `newMock`.
+2. Use `mockTransactionForward` with the wanted transaction response on the mocked function. Works with the following options object:
+```
+{
+  data: '',               //if data is supplied, this is what is sent and other fields are ignored.,
+                          //if data is not supplied, use the following fields:
+  contract: '',           //contract object returned from the workbench
+  functionName: '',       //function to mock 
+  args: ''                //arguments to pass in the forwarded transaction
+}
+```
+
+```
+var Workbench = require('ethereum-sandbox-workbench');
+var workbench = new Workbench({
+  defaults: {
+    from: '0xcd2a3d9f938e13cd947ec05abc7fe734df8dd826'
+  }
+});
+workbench.startTesting(['GoldPrice', 'GoldPriceChecker'], function(contracts) {
+  it('tests-mock', function() {
+    return contracts.GoldPrice.newMock()
+    .then(function(contract) {
+      return mockContract.notifyCallback.mockTransactionForward('0x11111111111111111111111111111111', {
+        contract: goldPriceChecker,         //goldPriceChecker was created with `new`
+        functionName: 'setCallbackPrice',
+        args: [23]
+      });
+
+      //now when notifyCallback is invoked in a transaction, it will send a follow-up transaction to the goldPriceChecker contract
+    });
+  });
+});
+```
+
+##### Conditional return value or transaction response
+1. Create a new proxy using `newMock`.
+2. Use `mockCallReturnValue` or `mockTransactionForward` as in previous example with an additional parameter as a list of arguments.
+
+```
+var Workbench = require('ethereum-sandbox-workbench');
+var workbench = new Workbench({
+  defaults: {
+    from: '0xcd2a3d9f938e13cd947ec05abc7fe734df8dd826'
+  }
+});
+workbench.startTesting('GoldPrice', function(contracts) {
+  it('tests-on-args', function() {
+    var mockContract;
+    return contracts.GoldPrice.newMock()
+    .then(function(contract) {
+      mockContract = contract;
+      return mockContract.getPriceWithParameter.mockCallReturnValue(10);
+    })
+    .then(function(receipt) {
+      return mockContract.getPriceWithParameter.mockCallReturnValue(20, [5]);
+    })
+    .then(function(receipt) {
+      return mockContract.getPriceWithParameter.call(500);
+    })
+    .then(function(value) {
+      assert(value.equals(10));
+      return mockContract.getPriceWithParameter.call(5);
+    })
+    .then(function(value) {
+      assert(value.equals(20));
+    });
+  });
+});
+
+```
+
+##### Tracing function calls
+1. Create a new proxy using `newMock` with `options.traceFunctionCalls = true`.
+2. Use `wasCalled` on the transaction receipt to see if the function was called in that transaction.
+
+```
+var Workbench = require('ethereum-sandbox-workbench');
+var workbench = new Workbench({
+  defaults: {
+    from: '0xcd2a3d9f938e13cd947ec05abc7fe734df8dd826'
+  }
+});
+workbench.startTesting('GoldPrice', function(contracts) {
+  it('tests-tracing', function() {
+    var mockContract;
+    return contracts.GoldPrice.newMock()
+    .then(function(contract) {
+      mockContract = contract;
+      return mockContract.getPriceWithParameter(5);
+    })
+    .then(function(txHash) {
+      return workbench.waitForReceipt(txHash);
+    })
+    .then(function(receipt) {
+      var result = mockContract.getPriceWithParameter.wasCalled(receipt);
+      assert(result.called);
+      assert(result.args[0].toString(), '5');
+    });
+  });
+});
+```
+
+For an extensive example, check out [mock-test.js](https://github.com/ether-camp/ethereum-testing-reference/blob/master/test/mock/mock-test.js).
 ## Want to help ? 
 ```
 We are looking for people who wants to 

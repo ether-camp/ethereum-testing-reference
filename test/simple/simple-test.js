@@ -8,8 +8,8 @@ var workbench = new Workbench({
 });
 
 workbench.startTesting('Math', function(contracts) {
-  it('sum-test', function(done) {
-    contracts.Math.new()
+  it('sum-test', function() {
+    return contracts.Math.new()
     .then(function(contract) {
       return contract.sum(2,2);
     })
@@ -20,8 +20,6 @@ workbench.startTesting('Math', function(contracts) {
       var result = workbench.sandbox.web3.toBigNumber(receipt.returnValue).toNumber();
       assert.equal(result, 4);
       assert.notEqual(result, 5);
-    })
-    .then(done)
-    .catch(done);
+    });
   });
 });
