@@ -49,16 +49,12 @@ var exchage;
     
     .then(function () {
      
-      exchage.isExist('Merkle3')
+      return exchage.isExist('Merkle3')
        .then(function(value){
-
-            log("retVal => " + value);
-            assert.equal(value, true);                       
+            assert.equal(value, true);
         });
         
-        
-        log("all done ");
-      
+              
     }).then(done).catch(done);
 
   
