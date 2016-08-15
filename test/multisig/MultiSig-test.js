@@ -40,6 +40,7 @@ workbench.startTesting('MultiSig', function(contracts) {
       } else {
         throw new Error('No contract address');
       }        
+      return true;
     });
   });
   
@@ -52,15 +53,11 @@ workbench.startTesting('MultiSig', function(contracts) {
   it('check-init', function() {
     log(" [check-init]");
 
-    return wallet.m_required.call()
-    .then(function (requiredFromContract) {
-      assert(requiredFromContract.equals(required));
-      return wallet.m_numOwners.call();
-    })
-    .then(function (numOwnersFromContract) {
-      /* m_numOwners is the pointer to the next owner slot */
-      assert(numOwnersFromContract.equals(owners.length + 1));
-    });
+    var m_required = wallet.m_required.call()
+    assert(m_required.equals(required));
+    var m_numOwners = wallet.m_numOwners.call();
+    assert(m_numOwners.equals(owners.length + 1));
+    return true;
   });
   
   /*
@@ -89,6 +86,7 @@ workbench.startTesting('MultiSig', function(contracts) {
       assert.equal(parsed.event, 'Deposit');
       assert.equal(parsed.args._from, '0xdedb49385ad5b94a16f236a6890cf9e0b1e30392');
       assert(parsed.args.value.equals(sandbox.web3.toWei(1, 'ether')));
+      return true;
     });
   });
  
@@ -123,6 +121,7 @@ workbench.startTesting('MultiSig', function(contracts) {
         assert(parsed.args.value.equals(sandbox.web3.toWei(0.4, 'ether')));
         assert.equal(parsed.args.owner, '0xcd2a3d9f938e13cd947ec05abc7fe734df8dd826');
         assert.equal(parsed.args.to, '0xdedb49385ad5b94a16f236a6890cf9e0b1e30392');
+        return true;
     });
   });
     
@@ -162,6 +161,7 @@ workbench.startTesting('MultiSig', function(contracts) {
         assert.equal(confirmationNeededEventLog.args.initiator, '0xcd2a3d9f938e13cd947ec05abc7fe734df8dd826');
         assert.equal(confirmationNeededEventLog.args.to, '0xdedb49385ad5b94a16f236a6890cf9e0b1e30392');
         confirmationNeededHash = confirmationNeededEventLog.args.operation;
+        return true;
     });
   });
 
@@ -200,6 +200,7 @@ workbench.startTesting('MultiSig', function(contracts) {
         assert.equal(multiTransactEventLog.args.owner, '0xf6adcaf7bbaa4f88a554c45287e2d1ecb38ac5ff');
         assert(multiTransactEventLog.args.value.equals(sandbox.web3.toWei(0.5, 'ether')));
         assert.equal(multiTransactEventLog.args.to, '0xdedb49385ad5b94a16f236a6890cf9e0b1e30392');
+        return true;
     });
   });
 });

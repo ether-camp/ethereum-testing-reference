@@ -23,6 +23,7 @@ workbench.startTesting(['GoldPrice', 'GoldPriceChecker'], function(contracts) {
       } else {
         throw new Error('No address for deployed contract');
       }
+      return true;
     });
   });
 
@@ -39,6 +40,7 @@ workbench.startTesting(['GoldPrice', 'GoldPriceChecker'], function(contracts) {
     })
     .then(function(value) {
       assert(value.equals(299));
+      return true;
     });
   });
 
@@ -53,10 +55,9 @@ workbench.startTesting(['GoldPrice', 'GoldPriceChecker'], function(contracts) {
       return mockContract.price.mockCallReturnValue(5);
     })
     .then(function(receipt) {
-      return goldPriceChecker.getGoldPriceHappinessMeter.call();
-    })
-    .then(function(value) {
+      var value = goldPriceChecker.getGoldPriceHappinessMeter.call();
       assert.equal(value.toString(), '2');
+      return true;
     });
   });
 
@@ -81,6 +82,7 @@ workbench.startTesting(['GoldPrice', 'GoldPriceChecker'], function(contracts) {
     })
     .then(function(value) {
       assert.equal(value.toString(), '23');
+      return true;
     });
   });
 
@@ -98,6 +100,7 @@ workbench.startTesting(['GoldPrice', 'GoldPriceChecker'], function(contracts) {
     })
     .then(function(value) {
       assert(value.equals(20));
+      return true;
     });
   });
 
@@ -110,6 +113,7 @@ workbench.startTesting(['GoldPrice', 'GoldPriceChecker'], function(contracts) {
       var result = mockContract.getPriceWithParameter.wasCalled(receipt);
       assert(result.called);
       assert(result.args[0].toString(), '5');
+      return true;
     });
   });
 });

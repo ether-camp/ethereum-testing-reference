@@ -20,6 +20,7 @@ workbench.startTesting('Math', function(contracts) {
       var result = workbench.sandbox.web3.toBigNumber(receipt.returnValue).toNumber();
       assert.equal(result, 4);
       assert.notEqual(result, 5);
+      return true;
     });
   });
 });

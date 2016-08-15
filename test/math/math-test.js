@@ -31,6 +31,7 @@ workbench.startTesting('Math', function(contracts) {
       } else {
         throw new Error('new Address for contract');
       }
+      return true;
     });
   });
 
@@ -51,6 +52,7 @@ workbench.startTesting('Math', function(contracts) {
       var result = sandbox.web3.toBigNumber(receipt.returnValue).toNumber();
       assert.equal(result, expected);
       assert.notEqual(result, 5);
+      return true;
     });
  });
 
@@ -71,6 +73,7 @@ workbench.startTesting('Math', function(contracts) {
       var result = sandbox.web3.toBigNumber(receipt.returnValue).toNumber();
       assert.equal(result, expected);
       assert.notEqual(result, 5);
+      return true;
     });
   });
 
@@ -91,6 +94,7 @@ workbench.startTesting('Math', function(contracts) {
       var result = sandbox.web3.toBigNumber(receipt.returnValue).toNumber();
       assert.equal(result, expected);
       assert.notEqual(result, 15);
+      return true;
     });
   });
 
@@ -111,6 +115,7 @@ workbench.startTesting('Math', function(contracts) {
       var result = sandbox.web3.toBigNumber(receipt.returnValue).toNumber();
       assert.equal(result, expected);
       assert.notEqual(result, 15);
+      return true;
     });
   });
 });
