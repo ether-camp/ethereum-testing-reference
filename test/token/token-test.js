@@ -9,53 +9,35 @@ var workbench = new Workbench({
   }
 });
 
-
 workbench.startTesting('StandardToken', function(contracts) {
 
 var sandbox = workbench.sandbox;
 var token;
-  
-  
-  it('init', function(done) {
-
-    contracts.StandardToken.new()
-    
-       .then(function(contract) {
-
-    
-       if (contract.address){
-
-         token = contract;
-       } else {
-         
-         done(new Error('No contract address'));
-       }        
-      
-    }).then(done).catch(done);
+  it('init', function() {
+    return contracts.StandardToken.new()
+    .then(function(contract) {
+      if (contract.address){
+        token = contract;
+      } else {
+        throw new Error('No contract address');
+      }        
+      return true;
+    });
   });
   
 
-  it('create-1', function(done) {
-
-  
-    token.createToken({
+  it('create-1', function() {
+    return token.createToken({
       from: '0xcd2a3d9f938e13cd947ec05abc7fe734df8dd826',
       value: sandbox.web3.toWei(15, 'ether')
     })
-    
     .then(function (txHash) {
       return workbench.waitForReceipt(txHash);
     })
-    
     .then(function () {
-      
-      token.balanceOf('0xcd2a3d9f938e13cd947ec05abc7fe734df8dd826')
-       .then(function(value){
-
-            assert.equal(value, sandbox.web3.toWei(300, 'ether'));
-                       
-        }).then(done).catch(done);
-      
+      var balance = token.balanceOf('0xcd2a3d9f938e13cd947ec05abc7fe734df8dd826')
+      assert.equal(balance, sandbox.web3.toWei(300, 'ether'));
+      return true;
     });
   });
   
