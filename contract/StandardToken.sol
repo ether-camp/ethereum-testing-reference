@@ -1,71 +1,143 @@
 /*
-You should inherit from StandardToken or, for a token like you would want to
-deploy in something like Mist, see HumanStandardToken.sol.
-(This implements ONLY the standard functions and NOTHING else.
-If you deploy this, you won't have anything useful.)
-
-Implements ERC 20 Token standard: https://github.com/ethereum/EIPs/issues/20
-.*/
+ * StandardToken - is a smart contract  
+ * for managing common functionality of 
+ * a token.
+ *
+ * ERC.20 Token standard: 
+ *         https://github.com/eth ereum/EIPs/issues/20
+ */
 
 import "Token.sol";
 
 contract StandardToken is Token {
 
+
+    // token ownership
+    mapping (address => uint256) balances;
+
+    // spending permision management
+    mapping (address => mapping (address => uint256)) allowed;
+    
+    
+    
     function StandardToken(){
     }
-
-    function transfer(address _to, uint256 _value) returns (bool success) {
+    
+    
+    /**
+     * transfer() - transfer tokens from msg.sender balance 
+     *              to requested account
+     *
+     *  @param to    - target address to transfer tokens
+     *  @param value - ammount of tokens to transfer
+     *
+     *  @return - success / failure of the transaction
+     */    
+    function transfer(address to, uint256 value) returns (bool success) {
         
-        //Default assumes totalSupply can't be over max (2^256 - 1).
-        //If your token leaves out totalSupply and can issue more tokens as time goes on, you need to check if it doesn't wrap.
-        //Replace the if with this one instead.
-        //if (balances[msg.sender] >= _value && balances[_to] + _value > balances[_to]) {
-        if (balances[msg.sender] >= _value && _value > 0) {
-            balances[msg.sender] -= _value;
-            balances[_to] += _value;
-            Transfer(msg.sender, _to, _value);
+        
+        if (balances[msg.sender] >= value && value > 0) {
+
+            // do actual tokens transfer       
+            balances[msg.sender] -= value;
+            balances[to]         += value;
+            
+            // rise the Transfer event
+            Transfer(msg.sender, to, value);
             return true;
-        } else { return false; }
+        } else {
+            
+            return false; 
+        }
     }
     
-    function createToken(){
     
-        if (msg.value == 0) throw;
     
+    /**
+     * transferFrom() - 
+     *
+     *  @param from  - 
+     *  @param to    - 
+     *  @param value - 
+     *
+     *  @return 
+     */
+    function transferFrom(address from, address to, uint256 value) returns (bool success) {
         
-        uint token = msg.value * 20;
-        totalSupply += token;
-        balances[msg.sender] += token;        
-    }
-    
 
-    function transferFrom(address _from, address _to, uint256 _value) returns (bool success) {
-        
-        //same as above. Replace this line with the following if you want to protect against wrapping uints.
-        //if (balances[_from] >= _value && allowed[_from][msg.sender] >= _value && balances[_to] + _value > balances[_to]) {
-        if (balances[_from] >= _value && allowed[_from][msg.sender] >= _value && _value > 0) {
-            balances[_to] += _value;
-            balances[_from] -= _value;
-            allowed[_from][msg.sender] -= _value;
-            Transfer(_from, _to, _value);
+        if ( balances[from] >= value && 
+             allowed[from][msg.sender] >= value && 
+             value > 0) {
+
+            // do the actual transfer
+            balances[to]   += value;
+            balances[from] -= value;
+            
+            // addjust the permision, after part of 
+            // permited to spend value was used
+            allowed[from][msg.sender] -= value;
+            
+            // rise the Transfer event
+            Transfer(from, to, value);
             return true;
-        } else { return false; }
+        } else { 
+            
+            return false; 
+        }
     }
 
-    function balanceOf(address _owner) constant returns (uint256 balance) {
-        return balances[_owner];
+
+    
+    /**
+     *
+     * balanceOf() - constant function check concrete tokens balance  
+     *
+     *  @param owner - account owner
+     *  
+     *  @return the value of balance 
+     */                               
+    function balanceOf(address owner) constant returns (uint256 balance) {
+        return balances[owner];
     }
 
-    function approve(address _spender, uint256 _value) returns (bool success) {
-        allowed[msg.sender][_spender] = _value;
-        Approval(msg.sender, _spender, _value);
+    
+    
+    /**
+     *
+     * approve() - function approves to a person to spend some tokens from 
+     *           owner balance. 
+     *
+     *  @param spender - person whom this right been granted.
+     *  @param value   - value to spend.
+     * 
+     *  @return true in case of succes, otherwise failure
+     * 
+     */
+    function approve(address spender, uint256 value) returns (bool success) {
+        
+        // now spender can use balance in 
+        // ammount of value from owner balance
+        allowed[msg.sender][spender] = value;
+        
+        // rise event about the transaction
+        Approval(msg.sender, spender, value);
+        
         return true;
     }
 
-    function allowance(address _owner, address _spender) constant returns (uint256 remaining) {
-      return allowed[_owner][_spender];
+    /**
+     *
+     * allowance() - constant function to check how mouch is 
+     *               permited to spend to 3rd person from owner balance
+     *
+     *  @param owner   - owner of the balance
+     *  @param spender - permited to spend from this balance person 
+     *  
+     *  @return - remaining right to spend 
+     * 
+     */
+    function allowance(address owner, address spender) constant returns (uint256 remaining) {
+      return allowed[owner][spender];
     }
 
-    mapping (address => uint256) balances;
-    mapping (address => mapping (address => uint256)) allowed;
 }
