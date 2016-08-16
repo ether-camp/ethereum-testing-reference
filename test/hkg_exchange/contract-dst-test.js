@@ -14,9 +14,27 @@ var log     = console.log;
 var sandbox = workbench.sandbox;
 
 var exchage;
+var hackerGold;
   
+  it('init-hkg', function(done) {
+
+    contracts.HackerGold.new()
+    
+       .then(function(contract) {
+    
+               if (contract.address){
+
+                 hackerGold = contract;
+               } else {
+                 
+                 done(new Error('No contract address'));
+               }        
+      
+    }).then(done).catch(done);
+  });
+
   
-  it('init', function(done) {
+  it('init-hkg-exchange', function(done) {
 
     contracts.HKGExchange.new()
     
@@ -25,11 +43,14 @@ var exchage;
                if (contract.address){
 
                  exchage = contract;
+                 
                } else {
                  
                  done(new Error('No contract address'));
-               }        
-      
+               }  
+
+               
+               
     }).then(done).catch(done);
   });
   
@@ -44,24 +65,16 @@ var exchage;
     })
     
     .then(function (txHash) {
-        return workbench.waitForReceipt(txHash);
+        
+        workbench.waitForReceipt(txHash);
+    
+        var exist = exchage.isExist('Merkle3')
+        assert.equal(exist, true);
+        return done();
     })
     
-    .then(function () {
-     
-      return exchage.isExist('Merkle3')
-       .then(function(value){
-            assert.equal(value, true);
-        });
-        
-              
-    }).then(done).catch(done);
-
-  
         
   });
 
 
-
-  
 });

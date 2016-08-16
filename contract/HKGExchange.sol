@@ -1,5 +1,6 @@
 
-
+import "HackerGold.sol";
+import "ContractDST.sol";
 
 /**
  *    The exchange is valid system 
@@ -15,6 +16,14 @@ contract HKGExchange{
     
     
     mapping (string => address) company;
+    
+    HackerGold hackerGold;
+    
+    function HKGExchange(address hackerGoldAddr){
+    
+        hackerGold = HackerGold(hackerGoldAddr);
+    }
+    
     
     /**
      * Check if company already enlisted 
@@ -36,10 +45,45 @@ contract HKGExchange{
         company[companyName] = companyAddress;
     }
     
+    /**
+     *
+     */
+    function delist(){
+        // +. only after the event is done
+        // +. only by owner of the DSG
+    }
+
+
+    /**
+     *
+     * buy()
+     *
+     */
+    function buy(string companyName, uint hkg) returns (bool success) {
+        
+        // check DSG exist 
+        if (!isExist(companyName)) throw;
+        
+        /* 2. Transfer DSG  */
+        ContractDST contractDST = ContractDST(company[companyName]);
+        
+        
+        
+        /* 1. Transer on HackerGold */
+        /* +. Transfer  from sender */
+        /* +. check you have enough hacker gold to transfer */
+    
+    }
+    
+    
     
     /* todo functions */
-    // buy();
+    
     // sell();
     // regPlayer();
+    
+    
+    
+    
     
 }

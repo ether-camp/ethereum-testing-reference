@@ -16,6 +16,9 @@ contract ContractDST is StandardToken{
     
     uint constant HACKATHON_5_WEEKS = 1000 * 60 * 60 * 24 * 7 * 5;
     
+    // 1 - hkg => dsg qty = hkgPrice
+    uint hkgPrice = 200;
+    
     /*
      * 
      *  Set date for early adapters
@@ -24,11 +27,13 @@ contract ContractDST is StandardToken{
     function ContractDST(uint hackathonStart){
     
       hackathonEnd += hackathonStart + HACKATHON_5_WEEKS;            
-      owner = msg.sender; 
+      owner = msg.sender;  
     }
     
     
     function buyForHackerGold() onlyBeforeEnd returns (bool success) {
+    
+      // +. validate that the caller is official HKG Exchange
     
       // 1. transfer token 
       
@@ -43,7 +48,9 @@ contract ContractDST is StandardToken{
     }
     
     
-    
+    function getHKGPrice() constant returns (uint result){
+        return hkgPrice;
+    }
 
 
     modifier onlyBeforeEnd() { if (now >= hackathonEnd) throw; _ }
