@@ -1,5 +1,5 @@
 {
-  "contracts": "contracts",
+  "contracts": "./contract",
   
   "env": {
     "block": {
