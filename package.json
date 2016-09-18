@@ -11,6 +11,6 @@
     "mocha": "^2.5.3",
     "mochawesome": "1.3.0",
     "solc": "^0.3.4",
-    "web3": "^0.17.0-alpha"
+    "web3": "0.17.0-alpha"
   }
 }
