@@ -2,9 +2,9 @@
 // for contract not
 // to be deployed to 
 // any environment
-contract abstract {}
+contract abstractcontract {}
 
-contract owned is abstract {
+contract owned is abstractcontract {
   address owner;
   function owned() {
     owner = msg.sender;
@@ -13,17 +13,17 @@ contract owned is abstract {
     owner = newOwner;
   }
   modifier onlyowner() {
-    if (msg.sender==owner) _
+    if (msg.sender==owner) _;
   }
 }
 
-contract mortal is abstract, owned {
+contract mortal is abstractcontract, owned {
   function kill() onlyowner {
     if (msg.sender == owner) suicide(owner);
   }
 }
 
-contract NameReg is abstract {
+contract NameReg is abstractcontract {
   function register(bytes32 name) {}
   function unregister() {}
   function addressOf(bytes32 name) constant returns (address addr) {}
@@ -31,24 +31,24 @@ contract NameReg is abstract {
   function kill() {}
 }
 
-contract nameRegAware is abstract {
+contract nameRegAware is abstractcontract {
   function nameRegAddress() returns (address) {
     return 0x0860a8008298322a142c09b528207acb5ab7effc;
   }
-  
+
   function named(bytes32 name) returns (address) {
     return NameReg(nameRegAddress()).addressOf(name);
   }
 }
 
-contract named is abstract, nameRegAware {
+contract named is abstractcontract, nameRegAware {
   function named(bytes32 name) {
     NameReg(nameRegAddress()).register(name);
   }
 }
 
 // contract with util functions
-contract util is abstract {
+contract util is abstractcontract {
   // Converts 'string' to 'bytes32'
   function s2b(string s) internal returns (bytes32) {
       bytes memory b = bytes(s);
