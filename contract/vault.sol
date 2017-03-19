@@ -77,12 +77,12 @@ contract Vault {
     
     modifier only_owner() {
         if(msg.sender != owner) throw;
-        _
+        _;
     }
-    
+
     modifier only_recovery() {
         if(msg.sender != recovery) throw;
-        _
+        _;
     }
 
     /**
